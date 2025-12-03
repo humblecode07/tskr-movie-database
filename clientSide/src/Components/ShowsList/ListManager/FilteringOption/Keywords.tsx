@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import SearchKeywords from './SearchKeywords';
-import { ContextMovies } from '../../../../pages/Lists/MovieList';
-import { ContextTvShows } from '../../../../pages/Lists/TvList';
+import { ContextMovies } from '../../../../Pages/Lists/MovieList';
+import { ContextTvShows } from '../../../../Pages/Lists/TvList';
 
 const Keywords = () => {
   const moviesContext = useContext(ContextMovies);

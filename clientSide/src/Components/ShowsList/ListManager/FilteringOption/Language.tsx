@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
 import ArrowIcon from '../../../../assets/Icons/ArrowIcon'
 import { originalLanguageList } from '../../../../api/api';
-import { ContextMovies } from '../../../../pages/Lists/MovieList';
-import { ContextTvShows } from '../../../../pages/Lists/TvList';
+import { ContextMovies } from '../../../../Pages/Lists/MovieList';
+import { ContextTvShows } from '../../../../Pages/Lists/TvList';
 
 const Language = () => {
   const moviesContext = useContext(ContextMovies);

@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
-import { ContextMovies } from '../../../../pages/Lists/MovieList';
-import { ContextTvShows } from '../../../../pages/Lists/TvList';
+import { ContextMovies } from '../../../../Pages/Lists/MovieList';
+import { ContextTvShows } from '../../../../Pages/Lists/TvList';
 
 const Runtime = () => {
   const moviesContext = useContext(ContextMovies);

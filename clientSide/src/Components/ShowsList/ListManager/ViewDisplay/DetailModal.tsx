@@ -4,9 +4,9 @@ import StarIcon from '../../../../assets/Icons/StarIcon';
 import StarOutline from '../../../../assets/Icons/StarOutline';
 import PlayIcon from '../../../../assets/Icons/PlayIcon';
 import PlusIcon from '../../../../assets/Icons/PlusIcon';
-import { ContextMovies } from '../../../../pages/Lists/MovieList';
+import { ContextMovies } from '../../../../Pages/Lists/MovieList';
 import { certificationsDetail, movieDetailModal } from '../../../../api/api';
-import { ContextTvShows } from '../../../../pages/Lists/TvList';
+import { ContextTvShows } from '../../../../Pages/Lists/TvList';
 
 interface StreamDetails {
    poster_path: string;
