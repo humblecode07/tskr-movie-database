@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import './styles/App.css'
 import './styles/Components/Header/Header.css'
 import './styles/Pages/Home.css'
 import './styles/Components/Footer/Footer.css'
