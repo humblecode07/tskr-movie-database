@@ -3,7 +3,19 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { apiFetch } from '../api/api';
 
-const fetchMoviesBackdrop = async (rows : any) => {
+// Define the Movie interface
+interface Movie {
+   id: number;
+   title: string;
+   backdrop_path: string;
+   poster_path?: string;
+   overview?: string;
+   release_date?: string;
+   vote_average?: number;
+   [key: string]: any; // for any additional properties
+}
+
+const fetchMoviesBackdrop = async (rows: number): Promise<Movie[]> => {
    try {
       const pageNumbers = Array.from({ length: rows / 4 }, (_, i) => i + 1);
 
@@ -23,7 +35,7 @@ const fetchMoviesBackdrop = async (rows : any) => {
    }
 };
 
-const marquee = (direction : any, speed : any) => ({
+const marquee = (direction: 'left' | 'right', speed: number) => ({
    initial: {
       x: direction === 'left' ? '0%' : '-100%',
    },
@@ -39,8 +51,8 @@ const marquee = (direction : any, speed : any) => ({
 
 
 const Marquees = () => {
-   const [marqueeSlides, setMarqueeSlides] = useState([]);
-   const [marqueeRow, setMarqueeRow] = useState(4);
+   const [marqueeSlides, setMarqueeSlides] = useState<Movie[]>([]);
+   const [marqueeRow] = useState<number>(4);
 
    const { data, error, isLoading } = useQuery({
       queryKey: ['movieMarquees', marqueeRow],
@@ -60,7 +72,7 @@ const Marquees = () => {
       <section className="w-full flex flex-col absolute overflow-hidden">
          {Array.from({ length: marqueeRow }).map((_, index) => {
             const movieCardPerRow = 5;
-            const direction = index % 2 === 0 ? 'left' : 'right';
+            const direction: 'left' | 'right' = index % 2 === 0 ? 'left' : 'right';
             const speed = 20 + (index % 2) * 5;
 
             const startIndex = index * movieCardPerRow;
