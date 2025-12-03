@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { topLevelDataAppendCreditsApi } from '../../api/api';
-import Section from '../../components/Details/Section';
-import Credits from '../../components/Details/Credits';
+import Section from '../../Components/Details/Section';
+import Credits from '../../Components/Details/Credits';
 
 // Type definitions
 interface CastMember {

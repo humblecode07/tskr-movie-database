@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { appendVideosApi, fetchMultipleVideosData, getMyMovieDataApi } from '../../api/api';
-import Section from '../../components/Details/Section';
-import Videos from '../../components/Details/Videos';
+import Section from '../../Components/Details/Section';
+import Videos from '../../Components/Details/Videos';
 
 interface Video {
   key: string;

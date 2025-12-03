@@ -6,8 +6,8 @@ import {
   imagesApi,
   languages,
 } from "../../api/api";
-import Section from "../../components/Details/Section";
-import Medias from "../../components/Details/Medias";
+import Section from "../../Components/Details/Section";
+import Medias from "../../Components/Details/Medias";
 
 interface ImageItem {
   file_path: string;

@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import SearchFilter from '../../components/Admin/SearchFilter';
+import SearchFilter from '../../Components/Admin/SearchFilter';
 import AddIcon from '../../assets/Icons/Admin/AddIcon';
 import { fetchMyData } from '../../api/api';
 import { LOCALHOST } from '../../App';
 import TripleDotIcon from '../../assets/Icons/Admin/TripleDotIcon';
 import ViewIcon from '../../assets/Icons/Admin/ViewIcon';
-import OverviewPanel from '../../components/Details/OverviewPanel';
+import OverviewPanel from '../../Components/Details/OverviewPanel';
 import { NavLink } from 'react-router-dom';
 
 type Movie = {

@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useHorizontalScroll } from '../../hooks/useHorizontalScroll';
-import PrimaryDetails from '../../components/Admin/EditMovie/PrimaryDetails';
+import PrimaryDetails from '../../Components/Admin/EditMovie/PrimaryDetails';
 // import AlternativeTitles from '../../components/Admin/EditMovie/AlternativeTitles';
-import Cast from '../../components/Admin/EditMovie/Cast';
-import Crew from '../../components/Admin/EditMovie/Crew';
-import ExternalIds from '../../components/Admin/EditMovie/ExternalIDs';
-import Genres from '../../components/Admin/EditMovie/Genres';
+import Cast from '../../Components/Admin/EditMovie/Cast';
+import Crew from '../../Components/Admin/EditMovie/Crew';
+import ExternalIds from '../../Components/Admin/EditMovie/ExternalIDs';
+import Genres from '../../Components/Admin/EditMovie/Genres';
 // import Keywords from '../../components/Admin/EditMovie/Keywords';
 // import ProductionInformation from '../../components/Admin/EditMovie/ProductionInformation';
-import ReleaseInformation from '../../components/Admin/EditMovie/ReleaseInformation';
-import Taglines from '../../components/Admin/EditMovie/Taglines';
-import Videos from '../../components/Admin/EditMovie/Videos';
+import ReleaseInformation from '../../Components/Admin/EditMovie/ReleaseInformation';
+import Taglines from '../../Components/Admin/EditMovie/Taglines';
+import Videos from '../../Components/Admin/EditMovie/Videos';
 import { useParams } from 'react-router-dom';
 import { getMyMovieDataApi } from '../../api/api';
-import Images from '../../components/Admin/EditMovie/Images';
+import Images from '../../Components/Admin/EditMovie/Images';
 
 
 interface MovieData {

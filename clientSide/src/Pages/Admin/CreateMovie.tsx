@@ -1,11 +1,11 @@
 import { useReducer } from 'react';
 import LanguageDetect from 'languagedetect';
-import AddMovieDetails from '../../components/Admin/CreateMovie/AddMovieDetails';
-import TranslationCheck from '../../components/Admin/CreateMovie/TranslationCheck';
-import TvContentCheck from '../../components/Admin/CreateMovie/TvContentCheck';
-import MovieContentCheck from '../../components/Admin/CreateMovie/MovieContentCheck';
-import AdditionalDetails from '../../components/Admin/CreateMovie/AdditionalDetails';
-import VerifyAndSave from '../../components/Admin/CreateMovie/VerifyAndSave';
+import AddMovieDetails from '../../Components/Admin/CreateMovie/AddMovieDetails';
+import TranslationCheck from '../../Components/Admin/CreateMovie/TranslationCheck';
+import TvContentCheck from '../../Components/Admin/CreateMovie/TvContentCheck';
+import MovieContentCheck from '../../Components/Admin/CreateMovie/MovieContentCheck';
+import AdditionalDetails from '../../Components/Admin/CreateMovie/AdditionalDetails';
+import VerifyAndSave from '../../Components/Admin/CreateMovie/VerifyAndSave';
 import { createMovie } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 

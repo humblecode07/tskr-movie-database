@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import Marquee from '../../components/ShowsList/Marquee'
+import Marquee from '../../Components/ShowsList/Marquee'
 import { peopleList } from '../../api/api';
 import _ from 'lodash'
-import GridView from '../../components/ShowsList/ListManager/ViewDisplay/GridView';
+import GridView from '../../Components/ShowsList/ListManager/ViewDisplay/GridView';
 
 // Define the Person interface based on typical API response
 interface Person {

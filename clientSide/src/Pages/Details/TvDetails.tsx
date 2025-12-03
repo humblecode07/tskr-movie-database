@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { dataApi, imagesApi } from '../../api/api';
-import ShowCollage from '../../components/Details/ShowCollage';
-import Overview from '../../components/Details/Overview';
-import Recommendation from '../../components/Details/Recommendation';
-import Casts from '../../components/Details/Casts';
-import Media from '../../components/Details/OverviewMedia';
+import ShowCollage from '../../Components/Details/ShowCollage';
+import Overview from '../../Components/Details/Overview';
+import Recommendation from '../../Components/Details/Recommendation';
+import Casts from '../../Components/Details/Casts';
+import Media from '../../Components/Details/OverviewMedia';
 
 // Fetch TV Data
 interface Video {

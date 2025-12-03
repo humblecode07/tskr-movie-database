@@ -1,10 +1,10 @@
 import { createContext, useEffect, Dispatch, SetStateAction } from 'react'
-import Marquee from '../../components/ShowsList/Marquee'
-import DisplayViewOption from '../../components/ShowsList/ListManager/DisplayViewOption'
-import FilteringOption from '../../components/ShowsList/ListManager/FilteringOption'
-import SortByOption from '../../components/ShowsList/ListManager/SortByOption'
-import CompactView from '../../components/ShowsList/ListManager/ViewDisplay/CompactView'
-import GridView from '../../components/ShowsList/ListManager/ViewDisplay/GridView'
+import Marquee from '../../Components/ShowsList/Marquee'
+import DisplayViewOption from '../../Components/ShowsList/ListManager/DisplayViewOption'
+import FilteringOption from '../../Components/ShowsList/ListManager/FilteringOption'
+import SortByOption from '../../Components/ShowsList/ListManager/SortByOption'
+import CompactView from '../../Components/ShowsList/ListManager/ViewDisplay/CompactView'
+import GridView from '../../Components/ShowsList/ListManager/ViewDisplay/GridView'
 import { useShowsList } from '../../hooks/useShowsList'
 
 interface ContextTvShowsType {

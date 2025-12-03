@@ -7,10 +7,10 @@ import StarOutlineLIcon from '../../assets/Icons/StarOutlineLIcon';
 import WatchListSIcon from '../../assets/Icons/WatchListSIcon';
 import HeartIcon from '../../assets/Icons/HeartIcon';
 import { FacebookIcon, HomepageIcon, IMDbIcon, InstagramIcon, TwitterIcon, WikiDataIcon } from '../../assets/Icons/LinkIcons';
-import DividerTwo from '../../components/Details/DividerTwo';
-import Images from '../../components/Admin/MovieDetails/Images';
-import Recommendations from '../../components/Admin/MovieDetails/Recommendations';
-import Videos from '../../components/Admin/MovieDetails/Videos';
+import DividerTwo from '../../Components/Details/DividerTwo';
+import Images from '../../Components/Admin/MovieDetails/Images';
+import Recommendations from '../../Components/Admin/MovieDetails/Recommendations';
+import Videos from '../../Components/Admin/MovieDetails/Videos';
 
 interface Member {
 	profile_path: string | null;
