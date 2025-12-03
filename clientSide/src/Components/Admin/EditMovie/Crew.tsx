@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useParams } from 'react-router-dom';
 import AddIcon from '../../../assets/Icons/Admin/AddIcon';
 import DeleteIconWhite from '../../../assets/Icons/Admin/DeleteIconWhite';
@@ -7,64 +7,101 @@ import JobSearchBar from '../Credits/Jobs/JobSearchBar';
 import { addCrewMember, deleteCrewMemeber } from '../../../api/api';
 import EditIcon from '../../../assets/Icons/Admin/EditIcon';
 
-const Crew = ({ movieData, setMovieData }) => {
-  const crewData = movieData.credits?.crew || [];
-  const [isModalOpen, setIsModalOpen] = useState(false);
+interface CrewMember {
+  id: number;
+  name: string;
+  original_name: string;
+  department: string;
+  job: string;
+  profile_path?: string;
+}
 
-  const toggleAddCastMemberModal = () => {
-    console.log(isModalOpen)
+interface JobOccupation {
+  job: string;
+  department: string;
+}
+
+interface Credits {
+  cast?: any[];
+  crew: CrewMember[];
+}
+
+interface MovieData {
+  credits?: Credits;
+}
+
+const Crew = ({ movieData, setMovieData }: any) => {
+  const crewData: CrewMember[] = movieData.credits?.crew || [];
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const toggleAddCastMemberModal = (): void => {
+    console.log(isModalOpen);
     setIsModalOpen(!isModalOpen);
   };
 
-  const [selectedPerson, setSelectedPerson] = useState(null);
-  const [jobOccupation, setJobOccupation] = useState({
+  const [selectedPerson, setSelectedPerson] = useState<CrewMember | null>(null);
+  const [jobOccupation, setJobOccupation] = useState<JobOccupation>({
     job: '',
     department: ''
   });
 
-  const { movieId } = useParams();
+  const { movieId } = useParams<{ movieId: string }>();
 
-  const handleAddCrew = async () => {
+  const handleAddCrew = async (): Promise<void> => {
     try {
-      const data = {
-        id: selectedPerson.id,
-        name: selectedPerson.name,
-        original_name: selectedPerson.original_name,
+      const crewMemberData: CrewMember = {
+        id: selectedPerson!.id,
+        name: selectedPerson!.name,
+        original_name: selectedPerson!.original_name,
         department: jobOccupation.department,
         job: jobOccupation.job
+      };
+
+      // Convert to FormData
+      const formData = new FormData();
+      formData.append('id', crewMemberData.id.toString());
+      formData.append('name', crewMemberData.name);
+      formData.append('original_name', crewMemberData.original_name);
+      formData.append('department', crewMemberData.department);
+      formData.append('job', crewMemberData.job);
+
+      // Add optional fields if they exist
+      if (selectedPerson!.profile_path) {
+        formData.append('profile_path', selectedPerson!.profile_path);
       }
 
-      await addCrewMember(movieId, data);
+      await addCrewMember(movieId!, formData);
 
-      setMovieData((prevData) => ({
+      setMovieData((prevData: MovieData) => ({
         ...prevData,
         credits: {
-          ...prevData.credits,
-          crew: [...(prevData.credits?.crew || []), data],
+          ...prevData.credits!,
+          crew: [...(prevData.credits?.crew || []), crewMemberData],
         },
       }));
 
-      alert('Crew have been added successfuly!');
+      alert('Crew have been added successfully!');
     }
     catch (error) {
-      console.error('Failed to add crew memeber:', error);
+      alert('Failed to add the crew member. This member might already be on the list.');
+      console.error('Failed to add crew member:', error);
     }
-  }
+  };
 
-  const handleDeleteCrew = async (id) => {
+  const handleDeleteCrew = async (id: string): Promise<void> => {
     const confirmation = window.confirm("Are you sure you want to delete this crew member?");
 
     if (!confirmation) return;
 
     try {
-      await deleteCrewMemeber(movieId, id);
+      await deleteCrewMemeber(movieId!, id);
       alert('Crew member has been deleted successfully!');
 
-      setMovieData((prevData) => ({
+      setMovieData((prevData: MovieData) => ({
         ...prevData,
         credits: {
-          ...prevData.credits,
-          crew: prevData.credits?.crew.filter((crewMember) => crewMember.id !== id),
+          ...prevData.credits!,
+          crew: prevData.credits?.crew.filter((crewMember : any) => crewMember.id !== id) || [],
         },
       }));
     }
@@ -96,7 +133,7 @@ const Crew = ({ movieData, setMovieData }) => {
               </tr>
             </thead>
             <tbody>
-              {crewData.map((crewMember, index) => (
+              {crewData.map((crewMember: any, index: number) => (
                 <tr key={index} className="border-b border-[#444444] hover:bg-[#222222]">
                   <td className="px-4 py-3 flex items-center gap-2">
                     <span>{crewMember.name || crewMember.original_name}</span>

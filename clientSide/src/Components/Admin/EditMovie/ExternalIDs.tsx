@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FacebookIcon, IMDbIcon, InstagramIcon, TwitterIcon, WikiDataIcon } from '../../../assets/Icons/LinkIcons';
 import { useParams } from 'react-router-dom';
 import { changeExternalIds } from '../../../api/api';
 
-const ExternalIdInput = ({ label, Icon, name, value, onChange }) => (
+const ExternalIdInput = ({ label, Icon, name, value, onChange } : any) => (
   <div className="external-id-input">
     <label htmlFor={name}>
       {Icon && <Icon />}
@@ -21,8 +21,8 @@ const ExternalIdInput = ({ label, Icon, name, value, onChange }) => (
   </div>
 );
 
-const ExternalIDs = ({ movieData }) => {
-  const [externalIds, setExternalIds] = useState({
+const ExternalIDs = ({ movieData } : any) => {
+  const [externalIds, setExternalIds] : any = useState({
     facebook_id: movieData.external_ids?.facebook_id || '',
     twitter_id: movieData.external_ids?.twitter_id || '',
     instagram_id: movieData.external_ids?.instagram_id || '',
@@ -30,7 +30,7 @@ const ExternalIDs = ({ movieData }) => {
     wikidata_id: movieData.external_ids?.wikidata_id || '',
   });
 
-  const { movieId } = useParams();
+  const { movieId }  : any = useParams();
 
   useEffect(() => {
     setExternalIds({
@@ -42,9 +42,9 @@ const ExternalIDs = ({ movieData }) => {
     });
   }, [movieData]);
 
-  const handleChangeExternalIds = (e) => {
+  const handleChangeExternalIds = (e : any) => {
     const { name, value } = e.target;
-    setExternalIds((prev) => ({ ...prev, [name]: value }));
+    setExternalIds((prev : any) => ({ ...prev, [name]: value }));
   };
 
   const handleSaveExternalIds = async () => {

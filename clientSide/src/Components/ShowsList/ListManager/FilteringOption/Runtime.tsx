@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { ContextMovies } from '../../../../pages/Lists/MovieList';
 import { ContextTvShows } from '../../../../pages/Lists/TvList';
 
@@ -6,13 +6,13 @@ const Runtime = () => {
   const moviesContext = useContext(ContextMovies);
   const tvShowsContext = useContext(ContextTvShows);
   const context = moviesContext || tvShowsContext;
-  const { filters, handleFilterChange, setCurrentPage } = context || {};
+  const { filters, handleFilterChange, setCurrentPage } : any = context || {};
   const [runtime, setRuntime] = useState({
     gteRuntime: filters.runtime?.gteRuntime || 0,
     lteRuntime: filters.runtime?.lteRuntime || 400
   });
 
-  const handleRuntimeChange = (e, type) => {
+  const handleRuntimeChange = (e : any, type : any) => {
     const inputValue = e.target.value;
     const parsedValue = parseInt(inputValue, 10);
     const validValue = !isNaN(parsedValue) ? parsedValue : (type === 'gteRuntime' ? 0 : 300);

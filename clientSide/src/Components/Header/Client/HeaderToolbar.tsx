@@ -1,4 +1,3 @@
-import React from 'react'
 import Watchlist from './Watchlist'
 import LightModeSwitch from './LightModeSwitch'
 import Translation from './Translation'

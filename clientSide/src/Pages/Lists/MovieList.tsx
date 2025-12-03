@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from 'react'
+import { createContext, useEffect } from 'react'
 import Marquee from '../../components/ShowsList/Marquee'
 import FilteringOption from '../../components/ShowsList/ListManager/FilteringOption'
 import DisplayViewOption from '../../components/ShowsList/ListManager/DisplayViewOption'

@@ -1,31 +1,44 @@
-import { useLocation, Navigate, Outlet } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
-import { jwtDecode } from 'jwt-decode'
+import { useLocation, Navigate } from "react-router-dom";
+import { ReactNode } from "react";
+import useAuth from "../hooks/useAuth";
+import { jwtDecode } from "jwt-decode";
 
-const RequireAuth = ({ allowedRoles, children }) => {
-  const { user } = useAuth();
+interface RequireAuthProps {
+  allowedRoles: number[];
+  children: ReactNode;
+}
+
+interface DecodedToken {
+  roles?: string[];
+}
+
+const RequireAuth = ({ allowedRoles, children }: RequireAuthProps) => {
+  const { user } : any = useAuth();
   const location = useLocation();
 
-  const decoded = user?.accessToken ? jwtDecode(user.accessToken) : undefined
+  const decoded: DecodedToken | undefined = user?.accessToken
+    ? jwtDecode<DecodedToken>(user.accessToken)
+    : undefined;
 
-  const roles = decoded?.roles || []
+  const roles = decoded?.roles ?? [];
 
-  console.log("Auth role find: ", roles)
+  console.log("Auth role find:", roles);
 
-  const hasAccess = roles.some(role => allowedRoles?.includes(role));
+  const hasAccess = roles.some((role : any) => allowedRoles.includes(role));
 
-  console.log("has access: ", hasAccess)
+  console.log("has access:", hasAccess);
 
   if (hasAccess) {
-    console.log("user has access")
     return children;
   }
 
   if (user?.accessToken) {
-    return <Navigate to="/unauthorized" state={{ from: location }} replace />;
+    return (
+      <Navigate to="/unauthorized" state={{ from: location }} replace />
+    );
   }
 
   return <Navigate to="/signin" state={{ from: location }} replace />;
-}
+};
 
 export default RequireAuth;

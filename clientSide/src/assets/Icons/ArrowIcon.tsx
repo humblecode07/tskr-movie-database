@@ -1,5 +1,3 @@
-import React from 'react'
-
 const ArrowIcon = () => {
     return (
         <svg width="7" height="5" viewBox="0 0 7 5" fill="none" xmlns="http://www.w3.org/2000/svg">

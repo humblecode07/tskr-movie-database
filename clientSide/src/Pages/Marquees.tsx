@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { apiFetch } from '../api/api';
 
-const fetchMoviesBackdrop = async (rows) => {
+const fetchMoviesBackdrop = async (rows : any) => {
    try {
       const pageNumbers = Array.from({ length: rows / 4 }, (_, i) => i + 1);
 
@@ -23,7 +23,7 @@ const fetchMoviesBackdrop = async (rows) => {
    }
 };
 
-const marquee = (direction, speed) => ({
+const marquee = (direction : any, speed : any) => ({
    initial: {
       x: direction === 'left' ? '0%' : '-100%',
    },

@@ -1,7 +1,5 @@
-import React from 'react'
-
-const Budget = ({ primaryDetails, setPrimaryDetails }) => {
-  const handleChange = (e) => {
+const Budget = ({ primaryDetails, setPrimaryDetails } : any) => {
+  const handleChange = (e : any) => {
     setPrimaryDetails({ ...primaryDetails, budget: e.target.value })
   }
 

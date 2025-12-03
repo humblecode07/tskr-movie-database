@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import DividerTwo from '../../Details/DividerTwo'
 import { CarouselButtons, WatchlistButton } from '../../Button/Buttons';
 import StarOutlineLIcon from '../../../assets/Icons/StarOutlineLIcon';
 import StarIcon from '../../../assets/Icons/StarIcon';
 import PlayIcon from '../../../assets/Icons/PlayIcon';
 
-const Recommendations = ({ movieData }) => {
+const Recommendations = ({ movieData } : any) => {
    const recommendations = movieData.recommendations.slice(0, 18);
    const [slideCard, setSlideCard] = useState(0);
    const cardsToShow = 6;
@@ -28,7 +28,7 @@ const Recommendations = ({ movieData }) => {
          </div>
          <div className='w-full h-[24.1875rem] flex gap-[1.3125rem] relative'>
             {slideCard !== 0 ? <CarouselButtons direction="left" slideDirection={prevSlide} /> : null}
-            {recommendations.slice(slideCard, slideCard + cardsToShow).map((data, index) => (
+            {recommendations.slice(slideCard, slideCard + cardsToShow).map((data : any, index : number) => (
                <div
                   key={index}
                   className='w-[9.9375rem] h-[24.1875rem] flex flex-col bg-[#1a1a1a] overflow-hidden rounded-[0.625rem]'

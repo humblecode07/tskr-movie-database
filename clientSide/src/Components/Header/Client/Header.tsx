@@ -1,4 +1,3 @@
-import React from 'react'
 import TskrLogo from '../../../assets/Icons/TskrLogo'
 import NavigationMenu from './NavigationMenu'
 import SearchBar from './SearchBar'

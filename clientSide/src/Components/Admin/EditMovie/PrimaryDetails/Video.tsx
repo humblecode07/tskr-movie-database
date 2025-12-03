@@ -1,7 +1,5 @@
-import React from 'react'
-
-const Video = ({ primaryDetails, setPrimaryDetails }) => {
-  const handleChange = (e) => {
+const Video = ({ primaryDetails, setPrimaryDetails } : any) => {
+  const handleChange = (e : any) => {
     setPrimaryDetails({ ...primaryDetails, video: e.target.value === "true" })
   }
 

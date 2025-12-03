@@ -1,7 +1,5 @@
-import React from 'react'
-
-const OriginalTitle = ({ primaryDetails, setPrimaryDetails }) => {
-  const handleChange = (e) => {
+const OriginalTitle = ({ primaryDetails, setPrimaryDetails } : any) => {
+  const handleChange = (e : any) => {
     setPrimaryDetails({ ...primaryDetails, original_title: e.target.value })
   }
 

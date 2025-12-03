@@ -1,8 +1,7 @@
-import React from 'react'
 import LeftSIcon from '../../assets/Icons/LeftSIcon'
 import { Link, useLocation } from 'react-router-dom'
 
-const Section = ({ data }) => {
+const Section = ({ data } : any) => {
    const location = useLocation();
    const basePath = location.pathname.split('/').slice(0, 3).join('/');
 
@@ -12,7 +11,7 @@ const Section = ({ data }) => {
       <div className='w-[66.5rem] h-[18.75rem] mt-[3.3125rem] relative flex items-end'>
          <img
             src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
-            onError={(e) => e.target.src = `http://localhost:3000/images/${data.backdrop_path}`}
+            onError={(e : any) => e.target.src = `http://localhost:3000/images/${data.backdrop_path}`}
             className='w-full h-full object-cover rounded-[0.625rem] absolute'
             alt="Movie Poster"
          />

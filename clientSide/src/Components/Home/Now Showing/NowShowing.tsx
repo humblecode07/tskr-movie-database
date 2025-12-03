@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import HighlightedShow from './HighlightedShow'
 import UpNextShow from './UpNextShow'
 import axios from 'axios'
@@ -34,12 +34,12 @@ const NowShowing = () => {
   }, [])
 
   return (
-    <div class="now-showing-container">
-      <h1 class="now-showing-title">NOW SHOWING</h1>
-      <p class="now-showing-description">
+    <div className="now-showing-container">
+      <h1 className="now-showing-title">NOW SHOWING</h1>
+      <p className="now-showing-description">
         Catch the latest blockbusters and must-see films currently lighting up the big screen in theaters near you.
       </p>
-      <div class="now-showing-content">
+      <div className="now-showing-content">
         <HighlightedShow movieData={showingMovies} />
         <UpNextShow movieData={showingMovies} />
       </div>

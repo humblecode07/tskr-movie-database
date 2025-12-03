@@ -114,7 +114,6 @@ import SignIn from './pages/SignIn'
 import { AuthProvider } from './context/AuthContext'
 import PublicLayout from './pages/PublicLayout'
 import AdminLayout from './pages/Admin/AdminLayout'
-import AdminPage from './pages/Admin/AdminPage'
 import RequireAuth from './components/RequireAuth'
 import PersistLogin from './pages/PersistLogin'
 import AdminMovie from './pages/Admin/AdminMovie'
@@ -201,7 +200,6 @@ const router = createBrowserRouter([
           </RequireAuth>
         ),
         children: [
-          { path: '', element: <AdminPage /> },
           { path: 'movie', element: <AdminMovie /> },
           { path: 'movie/create', element: <CreateMovie /> },
           { path: 'movie/:movieId', element: <AdminMovieDetails /> },

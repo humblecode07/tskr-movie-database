@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { registerUser } from '../api/api';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Marquees from './Marquees';

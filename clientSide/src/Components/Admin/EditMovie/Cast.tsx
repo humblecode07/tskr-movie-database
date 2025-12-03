@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import EditIcon from '../../../assets/Icons/Admin/EditIcon';
 import DeleteIconWhite from '../../../assets/Icons/Admin/DeleteIconWhite';
 import AddIcon from '../../../assets/Icons/Admin/AddIcon';
@@ -6,60 +6,88 @@ import SearchBar from '../Credits/SearchBar';
 import { useParams } from 'react-router-dom';
 import { addCastMember, deleteCastMemeber } from '../../../api/api';
 
-const Cast = ({ movieData, setMovieData }) => {
-  const castData = movieData.credits?.cast || [];
-  const [isModalOpen, setIsModalOpen] = useState(false);
+interface CastMember {
+  id: number;
+  name: string;
+  character: string;
+  cast_id: number;
+  order: number;
+  profile_path?: string;
+}
 
-  const toggleAddCastMemberModal = () => {
+interface Credits {
+  cast: CastMember[];
+}
+
+interface MovieData {
+  credits?: Credits;
+}
+
+const Cast = ({ movieData, setMovieData }: any) => {
+  const castData: CastMember[] = movieData.credits?.cast || [];
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const toggleAddCastMemberModal = (): void => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const [selectedPerson, setSelectedPerson] = useState(null);
-  const [characterName, setCharacterName] = useState('');
+  const [selectedPerson, setSelectedPerson] = useState<CastMember | null>(null);
+  const [characterName, setCharacterName] = useState<string>('');
 
-  const { movieId } = useParams();
+  const { movieId } = useParams<{ movieId: string }>();
 
-  const handleAddCast = async () => {
+  const handleAddCast = async (): Promise<void> => {
     try {
-      const data = {
-        ...selectedPerson,
+      const castMemberData: CastMember = {
+        ...selectedPerson!,
         character: characterName,
         cast_id: Math.floor(Date.now() + Math.random() * 1000000),
         order: castData.length
+      };
+
+      const formData = new FormData();
+      formData.append('id', selectedPerson!.id.toString());
+      formData.append('name', selectedPerson!.name);
+      formData.append('character', characterName);
+      formData.append('cast_id', castMemberData.cast_id.toString());
+      formData.append('order', castMemberData.order.toString());
+
+      if (selectedPerson!.profile_path) {
+        formData.append('profile_path', selectedPerson!.profile_path);
       }
 
-      await addCastMember(movieId, data);
+      await addCastMember(movieId!, formData);
 
-      setMovieData((prevData) => ({
+      setMovieData((prevData: MovieData) => ({
         ...prevData,
         credits: {
-          ...prevData.credits,
-          cast: [...(prevData.credits?.cast || []), data],
+          ...prevData.credits!,
+          cast: [...(prevData.credits?.cast || []), castMemberData],
         },
       }));
 
-      alert('Cast have been added successfuly!');
+      alert('Cast have been added successfully!');
     }
     catch (error) {
       alert('Failed to add the cast member. This member might already be on the list.');
       console.error('Failed to add cast member:', error);
     }
-  }
+  };
 
-  const handleDeleteCast = async (id) => {
+  const handleDeleteCast = async (id: string): Promise<void> => {
     const confirmation = window.confirm("Are you sure you want to delete this cast member?");
 
     if (!confirmation) return;
 
     try {
-      await deleteCastMemeber(movieId, id);
+      await deleteCastMemeber(movieId!, id);
       alert('Cast member has been deleted successfully!');
 
-      setMovieData((prevData) => ({
+      setMovieData((prevData: MovieData) => ({
         ...prevData,
         credits: {
-          ...prevData.credits,
-          cast: prevData.credits?.cast.filter((castMember) => castMember.id !== id),
+          ...prevData.credits!,
+          cast: prevData.credits?.cast.filter((castMember : any) => castMember.id !== id) || [],
         },
       }));
     }
@@ -91,7 +119,7 @@ const Cast = ({ movieData, setMovieData }) => {
               </tr>
             </thead>
             <tbody>
-              {castData.map((castMember, index) => (
+              {castData.map((castMember: any, index: number) => (
                 <tr key={index} className="border-b border-[#444444] hover:bg-[#222222]">
                   <td className="px-4 py-3 flex items-center gap-2">
                     <span>{castMember.name}</span>

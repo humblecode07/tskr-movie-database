@@ -1,10 +1,10 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import LeftIcon from '../../assets/Icons/LeftIcon';
 import RightIcon from '../../assets/Icons/RightIcon';
 import PlusIcon from '../../assets/Icons/PlusIcon';
 
-export function WatchTrailerButton({ movieId }) {
+export function WatchTrailerButton({ movieId } : any) {
    const SPECIFIC_MOVIE_DATA_API = `https://api.themoviedb.org/3/movie/${movieId}?append_to_response=videos&language=en-US`
    const [movieTrailer, setMovieTrailer] = useState('');
 
@@ -22,7 +22,7 @@ export function WatchTrailerButton({ movieId }) {
             })
 
             const officialTrailerVideos = response.data.videos.results.filter(
-               video => video.name.toLowerCase().includes('official') && video.name.toLowerCase().includes('trailer')
+               (video : any) => video.name.toLowerCase().includes('official') && video.name.toLowerCase().includes('trailer')
             );
             setMovieTrailer(officialTrailerVideos[0].key);
          }
@@ -48,8 +48,8 @@ export function WatchTrailerButton({ movieId }) {
    );
 }
 
-export function TabSwitch({ section, selectedTab, onTabChange }) {
-   const changePeriod = (value) => {
+export function TabSwitch({ section, selectedTab, onTabChange } : any) {
+   const changePeriod = (value : any) => {
       if (selectedTab !== value) {
          onTabChange(value);
       }
@@ -87,7 +87,7 @@ export function TabSwitch({ section, selectedTab, onTabChange }) {
    );
 }
 
-export function CarouselButtons({ direction, slideDirection }) {
+export function CarouselButtons({ direction, slideDirection } : any) {
    return (
       <button
          className={`carousel-button ${direction === 'left' ? 'carousel-button-left' : 'carousel-button-right'}`}

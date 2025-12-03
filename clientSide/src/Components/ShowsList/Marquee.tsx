@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { apiFetch } from '../../api/api';
 
@@ -18,7 +18,7 @@ const marquee = {
    }
 }
 
-const Marquee = ({ display }) => {
+const Marquee = ({ display } : any) => {
    const [marqueeSlide, setMarqueeSlide] = useState([]);
 
    useEffect(() => {
@@ -61,7 +61,7 @@ const Marquee = ({ display }) => {
             animate="animate"
             variants={marquee}
          >
-            {marqueeSlide.map((data, index) => {
+            {marqueeSlide.map((data : any, index) => {
                return (
                   <div className='h-full min-w-[22.1875rem] brightness-75' key={index}>
                      <img 
@@ -78,7 +78,7 @@ const Marquee = ({ display }) => {
             animate="animate"
             variants={marquee}
          >
-            {marqueeSlide.map((data, index) => {
+            {marqueeSlide.map((data : any, index) => {
                return (
                   <div className='h-full min-w-[22.1875rem] brightness-50' key={index}>
                      <img 

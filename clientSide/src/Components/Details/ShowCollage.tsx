@@ -1,11 +1,10 @@
-import React from 'react'
 import BackdropIcon from '../../assets/Icons/BackdropIcon'
 import VideoIcon from '../../assets/Icons/VideoIcon'
 import PosterIcon from '../../assets/Icons/PosterIcon'
 import { NavLink } from 'react-router-dom'
 import { LOCALHOST } from '../../App'
 
-const ShowCollage = ({ data }) => {
+const ShowCollage = ({ data } : any) => {
    console.log(data)
    if (data) {
       return (
@@ -25,7 +24,7 @@ const ShowCollage = ({ data }) => {
                   className='w-[13.4375rem] h-[23.625rem] object-cover rounded-[10px]'
                   src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
                   alt={data.name}
-                  onError={(e) => {
+                  onError={(e : any) => {
                      e.target.onerror = () => { // Second fallback for the placeholder
                         e.target.src = 'https://craftypixels.com/placeholder-image/215x378/999799/31317d';
                      };
@@ -42,7 +41,7 @@ const ShowCollage = ({ data }) => {
                            className='w-full h-full absolute object-cover transition-transform duration-300 ease-in-out transform group-hover:scale-110'
                            src={`https://image.tmdb.org/t/p/w500${data.poster}`}
                            alt={data.name}
-                           onError={(e) => {
+                           onError={(e : any) => {
                               e.target.onerror = () => { // Second fallback for the placeholder
                                  e.target.src = 'https://craftypixels.com/placeholder-image/181x185/999799/31317d';
                               };
@@ -79,7 +78,7 @@ const ShowCollage = ({ data }) => {
                         className='w-full h-full absolute object-cover transition-transform duration-300 ease-in-out transform group-hover:scale-110'
                         src={`https://image.tmdb.org/t/p/w500${data.backdrop}`}
                         alt={data.name}
-                        onError={(e) => {
+                        onError={(e : any) => {
                            e.target.onerror = () => { // Second fallback for the placeholder
                               e.target.src = 'https://craftypixels.com/placeholder-image/370x185/999799/31317d';
                            };

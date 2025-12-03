@@ -5,8 +5,8 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query'; // Assuming you're using react-query
 import YoutubeIcon from '../../../assets/Icons/YoutubeIcon';
 
-const fetchVideoData = async (movieData) => {
-   const videoKeys = movieData.videos.map(video => video.key);
+const fetchVideoData = async (movieData : any) => {
+   const videoKeys = movieData.videos.map((video : any) => video.key);
 
    const youtubeDataArray = await fetchMultipleVideosData(videoKeys);
 
@@ -15,7 +15,7 @@ const fetchVideoData = async (movieData) => {
       return acc;
    }, {});
 
-   const videoTypeGroup = movieData.videos.reduce((acc, video) => {
+   const videoTypeGroup = movieData.videos.reduce((acc : any, video : any) => {
       if (!acc[video.type]) acc[video.type] = [];
 
       acc[video.type].push({ ...video, youtubeData: youtubeDataMap[video.key] });
@@ -25,7 +25,7 @@ const fetchVideoData = async (movieData) => {
    return { ...videoTypeGroup }
 }
 
-const Videos = ({ movieData }) => {
+const Videos = ({ movieData } : any) => {
    const { movieId } = useParams();
    const videoType = useMemo(() => ['Trailer', 'Teaser', 'Clip', 'Behind the Scenes', 'Bloopers', 'Featurette'], []);
 
@@ -43,7 +43,7 @@ const Videos = ({ movieData }) => {
       }
    }, [data, videoType]);
 
-   const convertDuration = (duration) => {
+   const convertDuration = (duration : any) => {
       const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
       const minutes = match[2] ? parseInt(match[2]) : 0;
       const seconds = match[3] ? parseInt(match[3]) : 0;
@@ -53,7 +53,7 @@ const Videos = ({ movieData }) => {
       return `${minutes}:${formattedSeconds}`;
    };
 
-   const formatDate = (dateString) => {
+   const formatDate = (dateString : any) => {
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       const date = new Date(dateString);
       return date.toLocaleDateString('en-US', options);

@@ -5,15 +5,44 @@ import { addBackdrop, addLogo, addPoster, setBackdropPath, setPosterPath } from 
 import { useParams } from 'react-router-dom';
 import TripleDotIcon from '../../../assets/Icons/Admin/TripleDotIcon';
 
-const Images = ({ movieData, setMovieData }) => {
+// Type definitions
+interface Image {
+  file_path: string;
+  [key: string]: any;
+}
+
+interface Images {
+  posters?: Image[];
+  backdrops?: Image[];
+  logos?: Image[];
+}
+
+interface MovieData {
+  images: Images;
+  [key: string]: any;
+}
+
+interface ImagesProps {
+  movieData: MovieData;
+  setMovieData: React.Dispatch<React.SetStateAction<MovieData>>;
+}
+
+type ImageType = 'poster' | 'backdrop' | 'logo';
+
+interface MediaDimensions {
+  width: string;
+  height: string;
+}
+
+const Images: React.FC<ImagesProps> = ({ movieData, setMovieData }) => {
   const images = movieData?.images;
-  const [selectedImageType, setSelectedImageType] = useState('poster');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(null);
+  const [selectedImageType, setSelectedImageType] = useState<ImageType>('poster');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [dropdownOpen, setDropdownOpen] = useState<number | null>(null);
 
-  const filteredImages = images?.[selectedImageType + 's'] || [];
+  const filteredImages: Image[] = images?.[selectedImageType + 's' as keyof Images] || [];
 
-  const mediaDimensions = {
+  const mediaDimensions: Record<ImageType, MediaDimensions> = {
     logo: {
       width: 'w-[23.4375rem]',
       height: 'h-[13.5rem]',
@@ -28,37 +57,36 @@ const Images = ({ movieData, setMovieData }) => {
     }
   }
 
+  const { movieId } = useParams<{ movieId: string }>();
 
-  const { movieId } = useParams();
-
-  const handleImageUpload = async (file, type) => {
+  const handleImageUpload = async (file: File, type: ImageType): Promise<void> => {
     try {
       const formData = new FormData();
       formData.append(type, file);
 
-      let response;
+      let response: any;
       switch (type) {
         case 'poster':
-          response = await addPoster(movieId, formData);
+          response = await addPoster(movieId!, formData);
           break;
         case 'backdrop':
-          response = await addBackdrop(movieId, formData);
+          response = await addBackdrop(movieId!, formData);
           break;
         case 'logo':
-          response = await addLogo(movieId, formData);
+          response = await addLogo(movieId!, formData);
           break;
         default:
           throw new Error('Invalid image type');
       }
 
       if (response && response[selectedImageType]) {
-        const newImage = response[selectedImageType];; // Adjust this based on your response structure
+        const newImage: Image = response[selectedImageType];
 
         // Add the new image to the movieData
         setMovieData((prevMovieData) => {
-          const updatedImages = {
+          const updatedImages: Images = {
             ...prevMovieData.images,
-            [selectedImageType + 's']: [...prevMovieData.images[selectedImageType + 's'], newImage],
+            [selectedImageType + 's']: [...prevMovieData.images[selectedImageType + 's' as keyof Images]!, newImage],
           };
 
           return {
@@ -76,24 +104,31 @@ const Images = ({ movieData, setMovieData }) => {
     }
   };
 
-
-  const handleImageTypeChange = (e) => {
-    setSelectedImageType(e.target.value);
+  const handleImageTypeChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+    setSelectedImageType(e.target.value as ImageType);
   }
 
-  const handleDropdownToggle = (index) => {
+  const handleDropdownToggle = (index: number): void => {
     setDropdownOpen(dropdownOpen === index ? null : index);
   };
 
-  const setAsDisplayImage = async (image) => {
+  const setAsDisplayImage = async (image: Image): Promise<void> => {
     try {
       switch (selectedImageType) {
-        case 'poster':
-          await setPosterPath(movieId, { poster_path: image.file_path });
+        case 'poster': {
+          const form = new FormData();
+          form.append("poster_path", image.file_path);
+          await setPosterPath(movieId!, form);
           break;
-        case 'backdrop':
-          await setBackdropPath(movieId, { backdrop_path: image.file_path });
+        }
+
+        case 'backdrop': {
+          const form = new FormData();
+          form.append("backdrop_path", image.file_path);
+          await setBackdropPath(movieId!, form);
           break;
+        }
+
         default:
           throw new Error('Invalid image type');
       }
@@ -106,7 +141,7 @@ const Images = ({ movieData, setMovieData }) => {
     }
   };
 
-  const deleteImage = async (image) => {
+  const deleteImage = async (image: Image): Promise<void> => {
     alert('This function is not available yet!')
   };
 
@@ -144,7 +179,7 @@ const Images = ({ movieData, setMovieData }) => {
           </div>
         </div>
         <div className='w-[47.9375rem] h-full flex flex-wrap gap-[1.0625rem]'>
-          {filteredImages.length > 0 ? filteredImages.map((image, index) => (
+          {filteredImages.length > 0 ? filteredImages.map((image: Image, index: number) => (
             <div key={index} className={`${mediaDimensions[selectedImageType].width} ${mediaDimensions[selectedImageType].height} relative`}>
               {selectedImageType !== 'logo' ?
                 <button

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { ContextMovies } from '../../../../pages/Lists/MovieList';
 import { ContextTvShows } from '../../../../pages/Lists/TvList';
 
@@ -6,13 +6,13 @@ const UserRating = () => {
    const moviesContext = useContext(ContextMovies);
    const tvShowsContext = useContext(ContextTvShows);
    const context = moviesContext || tvShowsContext;
-   const { filters, handleFilterChange, setCurrentPage } = context || {};
+   const { filters, handleFilterChange, setCurrentPage } : any = context || {};
    const [userScore, setUserScore] = useState({
       minScore: filters.userScore.minScore,
       maxScore: filters.userScore.maxScore
    })
 
-   const handleUserScoreChange = (e, type) => {
+   const handleUserScoreChange = (e : any, type : any) => {
       const inputValue = e.target.value;
       const parsedValue = parseInt(inputValue, 10);
       const validValue = !isNaN(parsedValue) ? parsedValue : (type === 'minScore' ? 0 : 10);

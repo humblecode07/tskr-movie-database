@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import JobSearch from './JobSearch';
 
-const JobSearchBar = ({ jobOccupation, setJobOccupation }) => {
+const JobSearchBar = ({ jobOccupation, setJobOccupation } : any) => {
    const [results, setResults] = useState([]);
 
-   const handleSelectJobOccupation = (job, department) => {
+   const handleSelectJobOccupation = (job : any, department : any) => {
       setJobOccupation({
          job: job,
          department: department
@@ -24,9 +24,9 @@ const JobSearchBar = ({ jobOccupation, setJobOccupation }) => {
          </div>
          {results && results.length > 0 && (
             <div className="absolute w-full h-[25rem] overflow-auto bg-gray-800">
-               {results.map((result, index) => (
+               {results.map((result : any, index) => (
                   <div key={index} className="p-2 border-b border-gray-700">
-                     {result.jobs.map((job, jobIndex) => (
+                     {result.jobs.map((job : any, jobIndex : any) => (
                         <div
                            key={`${index}-${jobIndex}`}
                            className="flex flex-col p-2 bg-[#2C2C2C] hover:bg-[#3C3C3C] cursor-pointer"

@@ -1,7 +1,5 @@
-import React from 'react'
-
-const Homepage = ({ primaryDetails, setPrimaryDetails }) => {
-  const handleChange = (e) => {
+const Homepage = ({ primaryDetails, setPrimaryDetails } : any) => {
+  const handleChange = (e : any) => {
     setPrimaryDetails({ ...primaryDetails, homepage: e.target.value })
   }
 

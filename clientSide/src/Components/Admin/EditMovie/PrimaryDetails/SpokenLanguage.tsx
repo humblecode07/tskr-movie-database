@@ -1,5 +1,3 @@
-import React from 'react'
-
 const SpokenLanguage = () => {
   return (
     <div className="w-[51.6875rem] flex flex-col gap-[0.5625rem] font-roboto">

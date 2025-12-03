@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
-const SearchBar = ({ isToggled, setIsToggled }) => {
+const SearchBar = ({ isToggled, setIsToggled } : any) => {
   const [search, setSearch] = useState('');
 
-  const handleChange = (search) => {
+  const handleChange = (search : any) => {
     setSearch(search);
   }
 

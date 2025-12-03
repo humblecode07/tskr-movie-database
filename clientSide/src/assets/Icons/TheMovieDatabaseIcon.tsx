@@ -1,5 +1,3 @@
-import React from 'react'
-
 const TheMovieDatabaseIcon = () => {
    return (
       <svg width="139" height="100" viewBox="0 0 139 100" fill="none" xmlns="http://www.w3.org/2000/svg">

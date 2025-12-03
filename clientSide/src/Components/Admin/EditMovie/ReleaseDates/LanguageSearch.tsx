@@ -1,7 +1,6 @@
 import axios from 'axios';
-import React from 'react'
 
-const fetchResults = async (value, setResults) => {
+const fetchResults = async (value : any, setResults : any) => {
   try {
     if (!value.trim()) {
       setResults([]);
@@ -21,7 +20,7 @@ const fetchResults = async (value, setResults) => {
       }
     });
 
-    const filterLanguage = response.data.filter(language =>
+    const filterLanguage = response.data.filter((language : any) =>
       language.english_name.toLowerCase().includes(value.toLowerCase()) ||
       language.iso_639_1.toLowerCase().includes(value.toLowerCase())
     );
@@ -33,8 +32,8 @@ const fetchResults = async (value, setResults) => {
   }
 };
 
-const LanguageSearch = ({ setResults, releaseDate, setReleaseDate }) => {
-  const handleChange = (search) => {
+const LanguageSearch = ({ setResults, releaseDate, setReleaseDate } : any) => {
+  const handleChange = (search : any) => {
     setReleaseDate({ ...releaseDate, language: search });
     fetchResults(search, setResults);
   }

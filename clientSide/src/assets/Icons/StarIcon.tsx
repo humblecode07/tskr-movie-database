@@ -1,5 +1,3 @@
-import React from 'react'
-
 const StarIcon = () => {
    return (
       <svg width="1.101875rem" height="1.1rem" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">

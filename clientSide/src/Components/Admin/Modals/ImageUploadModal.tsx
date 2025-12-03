@@ -6,7 +6,7 @@ const ImageUploadModal = ({
   setIsModalOpen,
   selectedImageType,
   onImageUpload
-}) => {
+} : any) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
   const [error, setError] = useState(null);

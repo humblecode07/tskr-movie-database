@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { certificationList } from '../../../../api/api';
 
-const CertificationsSelect = ({ releaseDate, setReleaseDate }) => {
+const CertificationsSelect = ({ releaseDate, setReleaseDate } : any) => {
    const [selectedCertifications, setSelectedCertifications] = useState([])
 
    useEffect(() => {
@@ -30,13 +30,13 @@ const CertificationsSelect = ({ releaseDate, setReleaseDate }) => {
       fetchCertification();
    }, [releaseDate.country])
 
-   const handleChange = (e) => {
+   const handleChange = (e : any) => {
       setReleaseDate({ ...releaseDate, certification: e.target.value });
    }
 
    return (
       <div>
-         <label for="type" className="block text-sm font-medium mb-2">Type</label>
+         <label htmlFor="type" className="block text-sm font-medium mb-2">Type</label>
          <div className='w-full h-[2.3125rem] flex justify-center items-center bg-transparent border-solid border-[1px] border-white rounded-sm'>
             <div className='w-[39.625rem]'>
                <select
@@ -45,7 +45,7 @@ const CertificationsSelect = ({ releaseDate, setReleaseDate }) => {
                   onChange={handleChange}
                >
                   <option value="">Select Certification</option>
-                  {selectedCertifications.map((cert, index) => (
+                  {selectedCertifications.map((cert : any, index) => (
                      <option
                         className='bg-black text-white border-solid border-[1px] border-[#CC511D] rounded-sm'
                         key={index}

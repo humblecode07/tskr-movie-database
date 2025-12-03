@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { apiFetch } from '../../../../api/api';
 import { ContextMovies } from '../../../../pages/Lists/MovieList';
 import { ContextTvShows } from '../../../../pages/Lists/TvList';
@@ -8,7 +8,7 @@ const Genres = () => {
   const moviesContext = useContext(ContextMovies);
   const tvShowsContext = useContext(ContextTvShows);
   const context = moviesContext || tvShowsContext;
-  const { streamType, filters, handleFilterChange, setCurrentPage } = context || {};
+  const { streamType, filters, handleFilterChange, setCurrentPage } : any = context || {};
   const [localGenres, setLocalGenres] = useState(filters.genres || []);
 
   useEffect(() => {
@@ -26,9 +26,9 @@ const Genres = () => {
     getGenres();
   }, [streamType])
 
-  function handleGenreToggle(genreId) {
+  function handleGenreToggle(genreId : any) {
     const updatedGenres = localGenres.includes(genreId)
-      ? localGenres.filter(id => id !== genreId)
+      ? localGenres.filter((id : any) => id !== genreId)
       : [...localGenres, genreId];
 
     setLocalGenres(updatedGenres);
@@ -40,7 +40,7 @@ const Genres = () => {
     <div className='text-white font-roboto flex flex-col gap-[0.875rem]'>
       <span className='text-[#ff8731] font-bold text-[.75rem]'>GENRES</span>
       <div className='flex flex-wrap gap-[0.6875rem]'>
-        {genres.map((genre) => {
+        {genres.map((genre : any) => {
           const isSelected = localGenres.includes(genre.id);
 
           return (

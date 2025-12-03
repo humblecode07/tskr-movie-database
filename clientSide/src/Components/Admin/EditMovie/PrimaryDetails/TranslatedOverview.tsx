@@ -1,7 +1,5 @@
-import React from 'react'
-
-const TranslatedOverview = ({ primaryDetails, setPrimaryDetails }) => {
-  const handleChange = (e) => {
+const TranslatedOverview = ({ primaryDetails, setPrimaryDetails } : any) => {
+  const handleChange = (e : any) => {
     setPrimaryDetails({ ...primaryDetails, overview: e.target.value })
   }
 

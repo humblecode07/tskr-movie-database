@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import XIcon from '../../../../assets/Icons/XIcon';
 import StarIcon from '../../../../assets/Icons/StarIcon';
 import StarOutline from '../../../../assets/Icons/StarOutline';
@@ -8,15 +8,83 @@ import { ContextMovies } from '../../../../pages/Lists/MovieList';
 import { certificationsDetail, movieDetailModal } from '../../../../api/api';
 import { ContextTvShows } from '../../../../pages/Lists/TvList';
 
-const DetailModal = ({ id, exitModal }) => {
+interface StreamDetails {
+   poster_path: string;
+   title: string;
+   release_date: string;
+   runtime: string;
+   certification: string;
+   genres: string[];
+   vote_average: string;
+   overview: string;
+   director: string;
+   actors: string[];
+   trailer: string | null;
+}
+
+// Define interfaces for API responses
+interface Genre {
+   id: number;
+   name: string;
+}
+
+interface CrewMember {
+   job: string;
+   name: string;
+}
+
+interface CastMember {
+   name: string;
+   character: string;
+}
+
+interface Video {
+   key: string;
+   name: string;
+   site: string;
+   type: string;
+}
+
+interface CertificationResult {
+   iso_3166_1: string;
+   release_dates?: Array<{ certification: string }>;
+   rating?: string;
+}
+
+interface MovieDetailResponse {
+   poster_path: string;
+   title?: string;
+   name?: string;
+   release_date?: string;
+   first_air_date?: string;
+   runtime?: number;
+   episode_run_time?: number[];
+   origin_country: string[];
+   genres: Genre[];
+   vote_average: number;
+   overview: string;
+   credits: {
+      crew: CrewMember[];
+      cast: CastMember[];
+   };
+   videos: {
+      results: Video[];
+   };
+}
+
+interface CertificationResponse {
+   results?: CertificationResult[];
+}
+
+const DetailModal = ({ id, exitModal }: any) => {
    const moviesContext = useContext(ContextMovies);
    const tvShowsContext = useContext(ContextTvShows);
    const context = moviesContext || tvShowsContext;
-   const { streamType, filters } = context || {};
-   const [streamDetails, setStreamDetails] = useState(null);
+   const { streamType, filters }: any = context || {};
+   const [streamDetails, setStreamDetails] = useState<StreamDetails | null>(null);
 
    // Convert total minutes to hh-mm format
-   const formatRuntime = (minutes) => {
+   const formatRuntime = (minutes: any) => {
       if (!minutes) return 'N/A';
       const hours = Math.floor(minutes / 60);
       const mins = minutes % 60;
@@ -28,53 +96,79 @@ const DetailModal = ({ id, exitModal }) => {
    useEffect(() => {
       const fetchStreamDetails = async () => {
          try {
-            const streamDetailOne = await movieDetailModal(streamType, id);
-            const streamDetailTwo = await certificationsDetail(streamType, id);
+            const streamDetailOne: MovieDetailResponse = await movieDetailModal(streamType, id);
+            const streamDetailTwo: CertificationResponse = await certificationsDetail(streamType, id);
 
-            const releaseYear = streamDetailOne.release_date ? streamDetailOne.release_date.split('-')[0] : streamDetailOne.first_air_date ? streamDetailOne.first_air_date.split('-')[0] : 'N/A';
+            const releaseYear = streamDetailOne.release_date
+               ? streamDetailOne.release_date.split('-')[0]
+               : streamDetailOne.first_air_date
+                  ? streamDetailOne.first_air_date.split('-')[0]
+                  : 'N/A';
 
-            const formattedRuntime = streamDetailOne.runtime ? formatRuntime(streamDetailOne.runtime) : streamDetailOne.episode_run_time[0] ? formatRuntime(streamDetailOne.episode_run_time[0]) : 'N/A';
+            const formattedRuntime = streamDetailOne.runtime
+               ? formatRuntime(streamDetailOne.runtime)
+               : streamDetailOne.episode_run_time?.[0]
+                  ? formatRuntime(streamDetailOne.episode_run_time[0])
+                  : 'N/A';
 
             const countryCode = filters.certification.certCountry;
-            const countryCertifications = streamDetailTwo.results?.find(cert => cert.iso_3166_1 === countryCode) || streamDetailTwo.results?.find(cert => cert.iso_3166_1 === streamDetailOne.origin_country[0]);
-            const certification = (countryCertifications?.release_dates?.[0]?.certification || countryCertifications?.release_dates?.[1]?.certification) || countryCertifications?.rating;
+            const countryCertifications = streamDetailTwo.results?.find(
+               (cert) => cert.iso_3166_1 === countryCode
+            ) || streamDetailTwo.results?.find(
+               (cert) => cert.iso_3166_1 === streamDetailOne.origin_country[0]
+            );
 
-            console.log(streamDetailTwo.results?.find(cert => cert.iso_3166_1 === streamDetailOne.origin_country[0]))
-            console.log(certification)
+            const certification = (
+               countryCertifications?.release_dates?.[0]?.certification ||
+               countryCertifications?.release_dates?.[1]?.certification
+            ) || countryCertifications?.rating;
 
+            console.log(streamDetailTwo.results?.find(
+               (cert) => cert.iso_3166_1 === streamDetailOne.origin_country[0]
+            ));
+            console.log(certification);
 
             // Grabs the official trailer
             const officialTrailerVideos = streamDetailOne.videos.results.filter(
-               video => video.name.toLowerCase().includes('official') && video.name.toLowerCase().includes('trailer') && video.site === 'YouTube'
+               (video) =>
+                  video.name.toLowerCase().includes('official') &&
+                  video.name.toLowerCase().includes('trailer') &&
+                  video.site === 'YouTube'
             );
 
             // If there is no official trailer, grab the first trailer
+            const firstTrailer = streamDetailOne.videos.results.find(
+               (video) => video.type === 'Trailer' && video.site === 'YouTube'
+            );
+
             const trailer = officialTrailerVideos.length > 0
                ? `https://www.youtube.com/watch?v=${officialTrailerVideos[0].key}`
-               : streamDetailOne.videos.results.find(video => video.type === 'Trailer' && video.site === 'YouTube')
-                  ? `https://www.youtube.com/watch?v=${streamDetailOne.videos.results.find(video => video.type === 'Trailer' && video.site === 'YouTube').key}`
-                  : null
-               ;
+               : firstTrailer
+                  ? `https://www.youtube.com/watch?v=${firstTrailer.key}`
+                  : null;
 
             // Grabs only the necessary information to display the movie detail
-            const grabNeededDetail = {
+            const grabNeededDetail: StreamDetails = {
                poster_path: streamDetailOne.poster_path,
-               title: streamDetailOne.title || streamDetailOne.name,
+               title: streamDetailOne.title || streamDetailOne.name || 'N/A',
                release_date: releaseYear,
                runtime: formattedRuntime,
                certification: certification || "N/A",
-               genres: streamDetailOne.genres.map(genre => genre.name),
+               genres: streamDetailOne.genres.map((genre) => genre.name),
                vote_average: streamDetailOne.vote_average.toFixed(1),
                overview: streamDetailOne.overview,
-               director: streamDetailOne.credits.crew.find(crewMember => crewMember.job === "Director")?.name || 'N/A',
-               actors: streamDetailOne.credits.cast.slice(0, 3).map(actor => `${actor.name} as ${actor.character}`),
+               director: streamDetailOne.credits.crew.find(
+                  (crewMember) => crewMember.job === "Director"
+               )?.name || 'N/A',
+               actors: streamDetailOne.credits.cast.slice(0, 3).map(
+                  (actor) => `${actor.name} as ${actor.character}`
+               ),
                trailer
             };
 
             setStreamDetails(grabNeededDetail);
-         }
-         catch (error) {
-            console.log("Error during fetching of movie details", error)
+         } catch (error) {
+            console.log("Error during fetching of movie details", error);
          }
       }
 
@@ -160,9 +254,9 @@ const DetailModal = ({ id, exitModal }) => {
                         href={streamDetails.trailer === null ? '#' : `${streamDetails.trailer}`}
                         target={streamDetails.trailer === null ? '_self' : '_blank'}
                         rel="noopener noreferrer"
-                        onClick={streamDetails.trailer === null ? (e) => e.preventDefault() : null}
+                        onClick={streamDetails.trailer === null ? (e) => e.preventDefault() : undefined}
                         className={`w-[18.75rem] h-[2.25rem] bg-[#1C252F] flex justify-center items-center gap-[0.553rem] rounded-full 
-                     ${streamDetails.trailer === null ? 'pointer-events-none cursor-not-allowed opacity-50' : 'hover:bg-gray-700'}`}
+    ${streamDetails.trailer === null ? 'pointer-events-none cursor-not-allowed opacity-50' : 'hover:bg-gray-700'}`}
                      >
                         <PlayIcon />
                         <span className='font-bold'>Trailer</span>

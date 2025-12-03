@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import { LOCALHOST } from '../../App';
 
-const Media = ({ data }) => {
+const Media = ({ data } : any) => {
 	const [selectMedia, setSelectMedia] = useState('Videos');
 
-	const handleSelect = (media) => {
+	const handleSelect = (media : any) => {
 		setSelectMedia(media);
 	};
 
 	console.log(data)
 
-	const mediaComponents = {
+	const mediaComponents : any = {
 		Videos: (
 			<>
-				{data.videos?.map((video, index) => {
+				{data.videos?.map((video : any, index : number) => {
 					if (index < 2) {
 						return (
 							<div key={index} className='w-[27.1875rem] flex-shrink-0'>
@@ -31,7 +31,7 @@ const Media = ({ data }) => {
 		),
 		Posters: (
 			<>
-				{data.posters.map((poster, index) => {
+				{data.posters.map((poster : any, index : number) => {
 					if (index < 5) {
 						return (
 							<div key={index} className="w-[10.1875rem] flex-shrink-0">
@@ -39,7 +39,7 @@ const Media = ({ data }) => {
 									className="w-full h-full object-cover"
 									src={`https://image.tmdb.org/t/p/original${poster.file_path}`}
 									alt=""
-									onError={(e) => {
+									onError={(e : any) => {
 										e.target.onerror = null; // Prevent infinite fallback loop
 										e.target.src = `${LOCALHOST}/images/${poster.file_path}`;
 									}}
@@ -52,7 +52,7 @@ const Media = ({ data }) => {
 		),
 		Backdrops: (
 			<>
-				{data.backdrops.map((backdrop, index) => {
+				{data.backdrops.map((backdrop : any, index : number) => {
 					if (index < 2) {
 						return (
 							<div key={index} className='w-[27.1875rem] flex-shrink-0'>
@@ -60,7 +60,7 @@ const Media = ({ data }) => {
 									className="w-full h-full object-cover"
 									src={`https://image.tmdb.org/t/p/original${backdrop.file_path}`}
 									alt=""
-									onError={(e) => {
+									onError={(e : any) => {
 										e.target.onerror = null; // Prevent infinite fallback loop
 										e.target.src = `${LOCALHOST}/images/${backdrop.file_path}`;
 									}}
@@ -73,7 +73,7 @@ const Media = ({ data }) => {
 		),
 		Logos: (
 			<>
-				{data.logos.map((logo, index) => {
+				{data.logos.map((logo : any, index : number) => {
 					if (index < 3) {
 						return (
 							<div key={index} className='w-[20.1875rem] flex-shrink-0'>
@@ -81,7 +81,7 @@ const Media = ({ data }) => {
 									className="w-full h-full object-cover"
 									src={`https://image.tmdb.org/t/p/original${logo.file_path}`}
 									alt=""
-									onError={(e) => {
+									onError={(e : any) => {
 										e.target.onerror = null; // Prevent infinite fallback loop
 										e.target.src = `${LOCALHOST}/images/${logo.file_path}`;
 									}}

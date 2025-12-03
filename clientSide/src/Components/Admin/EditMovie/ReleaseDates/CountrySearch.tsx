@@ -1,7 +1,6 @@
 import axios from 'axios';
-import React from 'react'
 
-const fetchResults = async (value, setResults) => {
+const fetchResults = async (value : any, setResults : any) => {
   try {
     if (!value.trim()) {
       setResults([]);
@@ -21,7 +20,7 @@ const fetchResults = async (value, setResults) => {
       }
     });
 
-    const filterCountry = response.data.filter(country =>
+    const filterCountry = response.data.filter((country : any) =>
       country.english_name.toLowerCase().includes(value.toLowerCase())
     );
 
@@ -32,8 +31,8 @@ const fetchResults = async (value, setResults) => {
   }
 };
 
-const CountrySearch = ({ setResults, releaseDate, setReleaseDate }) => {
-  const handleChange = (search) => {
+const CountrySearch = ({ setResults, releaseDate, setReleaseDate } : any) => {
+  const handleChange = (search : any) => {
     setReleaseDate({ ...releaseDate, country: search });
     fetchResults(search, setResults);
   }

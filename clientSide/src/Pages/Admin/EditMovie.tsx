@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHorizontalScroll } from '../../hooks/useHorizontalScroll';
 import PrimaryDetails from '../../components/Admin/EditMovie/PrimaryDetails';
-import AlternativeTitles from '../../components/Admin/EditMovie/AlternativeTitles';
+// import AlternativeTitles from '../../components/Admin/EditMovie/AlternativeTitles';
 import Cast from '../../components/Admin/EditMovie/Cast';
 import Crew from '../../components/Admin/EditMovie/Crew';
-import ExternalIds from '../../components/Admin/EditMovie/ExternalIds';
+import ExternalIds from '../../components/Admin/EditMovie/ExternalIDs';
 import Genres from '../../components/Admin/EditMovie/Genres';
-import Keywords from '../../components/Admin/EditMovie/Keywords';
-import ProductionInformation from '../../components/Admin/EditMovie/ProductionInformation';
+// import Keywords from '../../components/Admin/EditMovie/Keywords';
+// import ProductionInformation from '../../components/Admin/EditMovie/ProductionInformation';
 import ReleaseInformation from '../../components/Admin/EditMovie/ReleaseInformation';
 import Taglines from '../../components/Admin/EditMovie/Taglines';
 import Videos from '../../components/Admin/EditMovie/Videos';
@@ -38,7 +38,7 @@ const EditMovie = () => {
       { name: 'Videos', component: <Videos movieData={movieData} setMovieData={setMovieData} /> },
    ];
 
-   const handleTabClick = (tab, index) => {
+   const handleTabClick = (tab : any, index : number) => {
       setActiveIndex(index);
       setSelectedTab(tab.name);
    };

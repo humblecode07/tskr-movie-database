@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+type MediaType = "movie" | "tv";
+
 const apiClient = axios.create({
    baseURL: 'https://api.themoviedb.org/3',
    headers: {
@@ -12,7 +14,7 @@ const youtubeApi = axios.create({
    baseURL: 'https://www.googleapis.com/youtube/v3/videos',
 });
 
-export const apiFetch = async (endpoint) => {
+export const apiFetch = async (endpoint: string): Promise<any> => {
    try {
       const response = await apiClient({
          url: endpoint
@@ -38,7 +40,10 @@ export const countryListApi = async () => {
    }
 }
 
-export const watchProviderApi = async (type, code) => {
+export const watchProviderApi = async (
+   type: MediaType,
+   code: string
+): Promise<any> => {
    console.log(`https://api.themoviedb.org/3/watch/providers/${type}?language=en-US&watch_region=${code}`)
 
    try {
@@ -54,7 +59,9 @@ export const watchProviderApi = async (type, code) => {
 }
 
 // Certification Country
-export const certificationList = async (type) => {
+export const certificationList = async (
+   type: MediaType,
+): Promise<any> => {
    try {
       const response = await apiClient({
          url: `https://api.themoviedb.org/3/certification/${type}/list`
@@ -81,7 +88,9 @@ export const originalLanguageList = async () => {
    }
 }
 
-export const keywordResults = async (query) => {
+export const keywordResults = async (
+   query: string,
+): Promise<any> => {
    try {
       const response = await apiClient({
          url: `https://api.themoviedb.org/3/search/keyword?query=${query}&page=1`
@@ -94,7 +103,10 @@ export const keywordResults = async (query) => {
    }
 }
 
-export const movieDetailModal = async (type, id) => {
+export const movieDetailModal = async (
+   type: MediaType,
+   id: string
+): Promise<any> => {
    try {
       const response = await apiClient({
          url: `https://api.themoviedb.org/3/${type}/${id}?append_to_response=videos,credits&language=en-US`
@@ -107,7 +119,10 @@ export const movieDetailModal = async (type, id) => {
    }
 }
 
-export const certificationsDetail = async (type, movieId) => {
+export const certificationsDetail = async (
+   type: MediaType,
+   movieId: string
+): Promise<any> => {
    try {
       const response = await apiClient({
          url: `https://api.themoviedb.org/3/${type}/${movieId}/${type === "movie" ? "release_dates" : "content_ratings"}?`
@@ -120,7 +135,9 @@ export const certificationsDetail = async (type, movieId) => {
    }
 }
 
-export const peopleList = async (pageNum) => {
+export const peopleList = async (
+   pageNum: string
+): Promise<any> => {
    try {
       const response = await apiClient({
          url: `https://api.themoviedb.org/3/person/popular?language=en-US&page=${pageNum}`
@@ -133,7 +150,10 @@ export const peopleList = async (pageNum) => {
    }
 }
 
-export const dataApi = async (type, movieId) => {
+export const dataApi = async (
+   type: MediaType,
+   movieId: string
+): Promise<any> => {
    try {
       const response = await apiClient({
          url: `https://api.themoviedb.org/3/${type}/${movieId}?append_to_response=watch_providers,videos,images,release_dates,recommendations,external_ids,credits,content_ratings&language=en-US`
@@ -149,7 +169,10 @@ export const dataApi = async (type, movieId) => {
 // movieDataApi won't provide me the data for posters and backdrops, so I used the direct method for getting the images
 
 // some updates (10/03): i just found out i don't need to create another api for getting data for tv, i can just use these same APIs and add just a second argument to specify whether the data is for a TV show or a movie, they have the same format just differ on what stream tyoe being requested
-export const imagesApi = async (type, movieId) => {
+export const imagesApi = async (
+   type: MediaType,
+   movieId: string
+): Promise<any> => {
    try {
       const response = await apiClient({
          url: `https://api.themoviedb.org/3/${type}/${movieId}/images`
@@ -162,7 +185,10 @@ export const imagesApi = async (type, movieId) => {
    }
 }
 
-export const videosApi = async (type, movieId) => {
+export const videosApi = async (
+   type: MediaType,
+   movieId: string
+): Promise<any> => {
    try {
       const response = await apiClient({
          url: `https://api.themoviedb.org/3/${type}/${movieId}/videos`
@@ -175,7 +201,10 @@ export const videosApi = async (type, movieId) => {
    }
 }
 
-export const creditsApi = async (type, movieId) => {
+export const creditsApi = async (
+   type: MediaType,
+   movieId: string
+): Promise<any> => {
    try {
       const response = await apiClient({
          url: `https://api.themoviedb.org/3/${type}/${movieId}/credits`
@@ -188,7 +217,10 @@ export const creditsApi = async (type, movieId) => {
    }
 }
 
-export const topLevelDataApi = async (type, movieId) => {
+export const topLevelDataApi = async (
+   type: MediaType,
+   movieId: string
+): Promise<any> => {
    try {
       const response = await apiClient({
          url: `https://api.themoviedb.org/3/${type}/${movieId}?language=en-US`
@@ -201,7 +233,10 @@ export const topLevelDataApi = async (type, movieId) => {
    }
 }
 
-export const topLevelDataAppendCreditsApi = async (type, movieId) => {
+export const topLevelDataAppendCreditsApi = async (
+   type: MediaType,
+   movieId: string
+): Promise<any> => {
    try {
       const response = await apiClient({
          url: `https://api.themoviedb.org/3/${type}/${movieId}?append_to_response=credits&language=en-US`
@@ -215,7 +250,10 @@ export const topLevelDataAppendCreditsApi = async (type, movieId) => {
 }
 
 // For some reason it doesn't grab the data using append response
-export const appendImagesApi = async (type, movieId) => {
+export const appendImagesApi = async (
+   type: MediaType,
+   movieId: string
+): Promise<any> => {
    try {
       const response = await apiClient({
          url: `https://api.themoviedb.org/3/${type}/${movieId}?append_to_response=images&language=en-US`
@@ -228,7 +266,10 @@ export const appendImagesApi = async (type, movieId) => {
    }
 }
 
-export const appendVideosApi = async (type, movieId) => {
+export const appendVideosApi = async (
+   type: MediaType,
+   movieId: string
+): Promise<any> => {
    try {
       const response = await apiClient({
          url: `https://api.themoviedb.org/3/${type}/${movieId}?append_to_response=videos&language=en-US`
@@ -254,7 +295,9 @@ export const languages = async () => {
    }
 }
 
-export const fetchYoutubeData = async (videoId) => {
+export const fetchYoutubeData = async (
+   videoId: string
+): Promise<any> => {
    try {
       const response = await youtubeApi.get('', {
          params: {
@@ -269,7 +312,9 @@ export const fetchYoutubeData = async (videoId) => {
    }
 };
 
-export const fetchMultipleVideosData = async (keys) => {
+export const fetchMultipleVideosData = async (
+   keys: string[]
+): Promise<any[]> => {
    try {
       const response = await youtubeApi.get(`?part=snippet,statistics,contentDetails&id=${keys.join(',')}&key=${import.meta.env.VITE_YT_API_ACCESS_KEY}`);
 
@@ -280,61 +325,63 @@ export const fetchMultipleVideosData = async (keys) => {
    }
 };
 
-export const fetchSearchTVWithCredits = async (query) => {
+export const fetchSearchTVWithCredits = async (
+   query: string
+): Promise<any[]> => {
    try {
-      // Fetch the TV show details first
       const response = await apiClient({
-         url: `https://api.themoviedb.org/3/search/tv?query=${query}&include_adult=false&language=en-US&page=1`
+         url: `https://api.themoviedb.org/3/search/tv?query=${query}&include_adult=false&language=en-US&page=1`,
       });
 
       if (response.data.results && response.data.results.length > 0) {
          const resultsWithCredits = await Promise.all(
-            response.data.results.map(async (tvShow) => {
-               const tvShowId = tvShow.id; // Extract the tv_show_id
-
+            response.data.results.map(async (tvShow: any) => {
                const creditsResponse = await apiClient({
-                  url: `https://api.themoviedb.org/3/tv/${tvShowId}/credits?language=en-US`
+                  url: `https://api.themoviedb.org/3/tv/${tvShow.id}/credits?language=en-US`,
                });
 
                tvShow.credits = creditsResponse.data;
                return tvShow;
             })
          );
-         response.data.results = resultsWithCredits;
+
+         return resultsWithCredits; // just return the array
       }
 
-      return response.data;
-   }
-   catch (error) {
-      console.log('Error during fetching of data', error);
+      return [];
+   } catch (error) {
+      console.log("Error during fetching of data", error);
+      return [];
    }
 };
 
-export const fetchSearchMovieWithCredits = async (query) => {
+export const fetchSearchMovieWithCredits = async (
+   query: string
+): Promise<any[]> => {
    try {
       const response = await apiClient({
-         url: `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`
+         url: `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`,
       });
 
       if (response.data.results && response.data.results.length > 0) {
          const resultsWithCredits = await Promise.all(
-            response.data.results.map(async (movie) => {
-               const movieId = movie.id; // Extract the movie_id
-
+            response.data.results.map(async (movie: any) => {
                const creditsResponse = await apiClient({
-                  url: `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`
+                  url: `https://api.themoviedb.org/3/movie/${movie.id}/credits?language=en-US`,
                });
 
                movie.credits = creditsResponse.data;
                return movie;
             })
          );
-         response.data.results = resultsWithCredits;
+
+         return resultsWithCredits;
       }
-      return response.data;
-   }
-   catch (error) {
-      console.log('Error during fetching of data', error);
+
+      return [];
+   } catch (error) {
+      console.log("Error during fetching of data", error);
+      return [];
    }
 };
 
@@ -358,20 +405,25 @@ export const axiosPrivate = axios.create({
    withCredentials: true
 });
 
-export const fetchMyData = async (type) => {
+export const fetchMyData = async (
+   type: string
+): Promise<any> => {
    try {
       const response = await axiosPrivate({
-         url: `http://localhost:3000/${type}/`
-      })
+         url: `http://localhost:3000/${type}/`,
+      });
 
-      return response.data
+      return response.data;
+   } catch (error) {
+      console.log("Error during fetching of data", error);
+      return null;
    }
-   catch (error) {
-      console.log('Error during fetching of data', error);
-   }
-}
+};
 
-export const getMyMovieDataApi = async (type, movieId) => {
+export const getMyMovieDataApi = async (
+   type: string,
+   movieId: string
+): Promise<any> => {
    try {
       const response = await axiosPrivate({
          url: `http://localhost:3000/${type}/${movieId}`
@@ -396,173 +448,218 @@ export const getMyMovieDataApi = async (type, movieId) => {
    }
 }
 
-export const createMovie = async (data) => {
+export const createMovie = async (
+   data: any
+): Promise<any> => {
    try {
       const response = await axiosPrivate.post('/movie', data);
       console.log('Movie created successfully:', response.data);
-      return response.data; // Return response if needed
-   }
-   catch (error) {
+      return response.data;
+   } catch (error: any) {
       console.error('Error creating movie:', error.response?.data || error.message);
+      return null;
    }
 };
 
-export const deleteMovie = async (id) => {
+export const deleteMovie = async (
+   id: string | number
+): Promise<any> => {
    try {
       const response = await axiosPrivate.delete(`/movie/${id}`);
       return response.data;
-   }
-   catch (error) {
+   } catch (error: any) {
       console.error('Error deleting movie:', error.response?.data || error.message);
       throw error;
    }
 };
 
-export const editPrimaryDetails = async (id, data) => {
+export const editPrimaryDetails = async (
+   id: string,
+   data: FormData
+): Promise<any> => {
    try {
       const response = await axiosPrivate.patch(`/movie/${id}/primary-details`, data);
       return response.data;
-   }
-   catch (error) {
+   } catch (error: any) {
       console.error('Error modifying the movie data:', error.response?.data || error.message);
       throw error;
    }
-}
+};
 
-export const addCastMember = async (id, data) => {
+
+export const addCastMember = async (
+   id: string,
+   data: FormData
+): Promise<any> => {
    try {
       const response = await axiosPrivate.patch(`/movie/${id}/cast`, data);
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('Error adding the cast member:', error.response?.data || error.message);
       throw error;
    }
 }
 
-export const deleteCastMemeber = async (id, castId) => {
+export const deleteCastMemeber = async (
+   id: string,
+   castId: string
+): Promise<any> => {
    try {
       const response = await axiosPrivate.delete(`/movie/${id}/cast/${castId}`);
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('Error deleting the cast member:', error.response?.data || error.message);
       throw error;
    }
 }
 
-export const addCrewMember = async (id, data) => {
+export const addCrewMember = async (
+   id: string,
+   data: FormData
+): Promise<any> => {
    try {
       const response = await axiosPrivate.patch(`/movie/${id}/crew`, data);
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('Error adding the crew member:', error.response?.data || error.message);
       throw error;
    }
 }
 
-export const deleteCrewMemeber = async (id, castId) => {
+export const deleteCrewMemeber = async (
+   id: string,
+   castId: string
+): Promise<any> => {
    try {
       const response = await axiosPrivate.delete(`/movie/${id}/crew/${castId}`);
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('Error deleting the crew member:', error.response?.data || error.message);
       throw error;
    }
 }
 
-export const changeExternalIds = async (id, data) => {
+export const changeExternalIds = async (
+   id: string,
+   data: FormData
+): Promise<any> => {
    try {
       const response = await axiosPrivate.patch(`/movie/${id}/external-ids`, data);
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('Error changing the external ids:', error.response?.data || error.message);
       throw error;
    }
 }
 
-export const addPoster = async (id, data) => {
+export const addPoster = async (
+   id: string,
+   data: FormData
+): Promise<any> => {
    try {
       console.log(data);
       const response = await axiosPrivate.post(`/movie/${id}/posters`, data);
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('An error occured during the process:', error.response?.data || error.message);
       throw error;
    }
 }
 
-export const addBackdrop = async (id, data) => {
+export const addBackdrop = async (
+   id: string,
+   data: FormData
+): Promise<any> => {
    try {
       const response = await axiosPrivate.post(`/movie/${id}/backdrops`, data);
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('An error occured during the process', error.response?.data || error.message);
       throw error;
    }
 }
 
-export const addLogo = async (id, data) => {
+export const addLogo = async (
+   id: string,
+   data: FormData
+): Promise<any> => {
    try {
       const response = await axiosPrivate.post(`/movie/${id}/logos`, data);
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('An error occured during the process', error.response?.data || error.message);
       throw error;
    }
 }
 
-export const setPosterPath = async (id, data) => {
+export const setPosterPath = async (
+   id: string,
+   data: FormData
+): Promise<any> => {
    try {
       const response = await axiosPrivate.patch(`/movie/${id}/poster-path`, data);
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('An error occured during the process', error.response?.data || error.message);
       throw error;
    }
 }
 
-export const setBackdropPath = async (id, data) => {
+export const setBackdropPath = async (
+   id: string,
+   data: FormData
+): Promise<any> => {
    try {
       const response = await axiosPrivate.patch(`/movie/${id}/backdrop-path`, data);
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('An error occured during the process', error.response?.data || error.message);
       throw error;
    }
 }
 
-export const addVideo = async (id, data) => {
+export const addVideo = async (
+   id: string,
+   data: FormData
+): Promise<any> => {
    try {
       const response = await axiosPrivate.post(`/movie/${id}/videos`, data);
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('An error occured during the process', error.response?.data || error.message);
       throw error;
    }
 }
 
-export const addGenre = async (id, data) => {
+export const addGenre = async (
+   id: string,
+   data: FormData
+): Promise<any> => {
    try {
       const response = await axiosPrivate.patch(`/movie/${id}/genre`, data);
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('An error occured during the process', error.response?.data || error.message);
       throw error;
    }
 }
 
-export const deleteGenre = async (id, data) => {
+export const deleteGenre = async (
+   id: string,
+   data: FormData
+): Promise<any> => {
    try {
       console.log(data);
       const response = await axiosPrivate.delete(`/movie/${id}/genre`, {
@@ -571,54 +668,67 @@ export const deleteGenre = async (id, data) => {
       });
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('An error occured during the process', error.response?.data || error.message);
       throw error;
    }
 }
 
-export const addTagline = async (id, tagline) => {
+export const addTagline = async (
+   id: string,
+   data: { taglines: string[] }
+): Promise<any> => {
    try {
-      const response = await axiosPrivate.post(`/movie/${id}/tagline`, tagline);
+      const response = await axiosPrivate.post(`/movie/${id}/tagline`, data);
       return response.data;
-   }
-   catch (error) {
-      console.error('An error occured during the process', error.response?.data || error.message);
+   } catch (error: any) {
+      console.error(
+         'An error occurred during the process',
+         error.response?.data || error.message
+      );
       throw error;
    }
-}
+};
 
-export const deleteTagline = async (id, tagline) => {
+export const deleteTagline = async (
+   id: string,
+   data: { taglines: string[] }
+): Promise<any> => {
    try {
       const response = await axiosPrivate.delete(`/movie/${id}/tagline`, {
          headers: { 'Content-Type': 'application/json' },
-         data: { tagline: tagline },
+         data: { tagline: data },
       });
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('An error occured during the process', error.response?.data || error.message);
       throw error;
    }
 }
 
-export const addReleaseDate = async (id, data) => {
+export const addReleaseDate = async (
+   id: string,
+   data: FormData
+): Promise<any> => {
    try {
       const response = await axiosPrivate.patch(`/movie/${id}/release-date`, data);
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('An error occured during the process', error.response?.data || error.message);
       throw error;
    }
 }
 
-export const registerUser = async (data) => {
+export const registerUser = async (
+   data: FormData
+): Promise<any> => {
    try {
       const response = await axiosPrivate.post(`/users/register`, data);
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('An error occured during the process', error.response?.data || error.message);
       throw error;
    }
@@ -629,7 +739,7 @@ export const userLogout = async () => {
       const response = await axiosPrivate.get(`/logout`);
       return response.data;
    }
-   catch (error) {
+   catch (error: any) {
       console.error('An error occured during the process', error.response?.data || error.message);
       throw error;
    }

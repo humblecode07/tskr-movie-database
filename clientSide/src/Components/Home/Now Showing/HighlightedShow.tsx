@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import StarIcon from '../../../assets/Icons/StarIcon';
 import WatchlistIconTwo from '../../../assets/Icons/WatchlistIconTwo';
 import { WatchTrailerButton } from '../../Button/Buttons';
 import { NavLink } from 'react-router-dom';
 
-const HighlightedShow = ({ movieData }) => {
+const HighlightedShow = ({ movieData } : any) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideCount = movieData.length;
 
@@ -20,7 +20,7 @@ const HighlightedShow = ({ movieData }) => {
 
   return (
     <div className="highlighted-show-container">
-      {movieData.map((data, index) => (
+      {movieData.map((data : any, index : number) => (
         <NavLink
           to={`movies/${data.id}-${data.title.replace(/\s+/g, "-").toLowerCase()}`}
           key={index}

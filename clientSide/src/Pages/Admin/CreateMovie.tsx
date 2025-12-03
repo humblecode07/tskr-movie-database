@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import { useReducer } from 'react';
 import LanguageDetect from 'languagedetect';
 import AddMovieDetails from '../../components/Admin/CreateMovie/AddMovieDetails';
 import TranslationCheck from '../../components/Admin/CreateMovie/TranslationCheck';
@@ -30,7 +30,7 @@ const initialState = {
 };
 
 // Correct function declaration for formReducer
-const formReducer = (state, action) => {
+const formReducer = (state : any, action : any) => {
    switch (action.type) {
       case 'NEXT_STEP':
          return { ...state, step: state.step + 1 };

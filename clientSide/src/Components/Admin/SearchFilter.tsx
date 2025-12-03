@@ -1,13 +1,12 @@
-import React from 'react'
 import SearchIcon from '../../assets/Icons/Admin/SearchIcon'
 
-const SearchFilter = ({ searchTerm, setSearchTerm, movies, setFilteredMovies }) => {
+const SearchFilter = ({ searchTerm, setSearchTerm, movies, setFilteredMovies } : any) => {
 
-   const handleSearch = (e) => {
+   const handleSearch = (e : any) => {
       const term = e.target.value.toLowerCase();
       setSearchTerm(term);
       setFilteredMovies(
-         movies.filter((movie) =>
+         movies.filter((movie : any) =>
             movie.title.toLowerCase().includes(term)
          )
       );

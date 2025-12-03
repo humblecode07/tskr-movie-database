@@ -1,8 +1,7 @@
-import React from 'react'
 import CompactViewIcon from '../../../assets/Icons/CompactViewIcon'
 import GridViewIcon from '../../../assets/Icons/GridViewIcon'
 
-const DisplayViewOption = ({ setSelectedView, resetCurrentPage }) => {
+const DisplayViewOption = ({ setSelectedView, resetCurrentPage } : any) => {
   return (
     <div className='flex items-center gap-[0.9375rem] font-roboto text-[1rem] text-white'>
       <span className='font-bold'>View</span>

@@ -1,7 +1,6 @@
 import axios from 'axios';
-import React from 'react'
 
-const fetchResults = async (value, setResults) => {
+const fetchResults = async (value : any, setResults : any) => {
   try {
     if (!value.trim()) {
       setResults([]);
@@ -21,8 +20,8 @@ const fetchResults = async (value, setResults) => {
       }
     });
 
-    const filteredJobs = response.data.reduce((acc, dept) => {
-      const matchingJobs = dept.jobs.filter(job => job.includes(value));
+    const filteredJobs = response.data.reduce((acc : any, dept : any) => {
+      const matchingJobs = dept.jobs.filter((job : any) => job.includes(value));
     
       if (matchingJobs.length > 0) acc.push({ department: dept.department, jobs: matchingJobs });
     
@@ -38,8 +37,8 @@ const fetchResults = async (value, setResults) => {
   }
 };
 
-const JobSearch = ({ setResults, jobOccupation, setJobOccupation }) => {
-  const handleChange = (search) => {
+const JobSearch = ({ setResults, jobOccupation, setJobOccupation } : any) => {
+  const handleChange = (search : any) => {
     setJobOccupation({ ...jobOccupation, job: search });
     fetchResults(search, setResults);
   }

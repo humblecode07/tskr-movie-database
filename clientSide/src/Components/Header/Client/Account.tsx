@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 import useAuth from '../../../hooks/useAuth'
 import { jwtDecode } from 'jwt-decode';
 import useLogout from '../../../hooks/useLogout';
 
 const Account = () => {
-  const { user } = useAuth();
+  const { user } : any = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const logout = useLogout();
+  const navigate = useNavigate();
 
-  const decoded = user?.accessToken ? jwtDecode(user.accessToken) : undefined
+  const decoded : any = user?.accessToken ? jwtDecode(user.accessToken) : undefined
 
   const username = decoded?.email; // serves as username, for now....
 

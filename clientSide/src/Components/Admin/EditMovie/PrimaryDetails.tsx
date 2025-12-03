@@ -12,12 +12,10 @@ import Runtime from './PrimaryDetails/Runtime';
 import Revenue from './PrimaryDetails/Revenue';
 import Budget from './PrimaryDetails/Budget';
 import Homepage from './PrimaryDetails/Homepage';
-import SpokenLanguage from './PrimaryDetails/SpokenLanguage';
 import { useParams } from 'react-router-dom';
 
-const PrimaryDetails = ({ movieData }) => {
+const PrimaryDetails = ({ movieData } : any) => {
   const [languages, setLanguages] = useState([]);
-  const [selectedCountries, setSelectedCountries] = useState([]);
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -67,7 +65,7 @@ const PrimaryDetails = ({ movieData }) => {
     fetchCountryList();
   }, []);
 
-  const { movieId } = useParams();
+  const { movieId } : any = useParams();
 
   const handleSubmit = async () => {
     try {

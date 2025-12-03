@@ -1,53 +1,52 @@
-import React from 'react'
 import TheMovieDatabaseIcon from '../../assets/Icons/TheMovieDatabaseIcon'
 import { Facebook, GitHub, LinkedIn, Twitter } from '../../assets/Icons/SocialMediaIcons'
 
 const Footer = () => {
   return (
-    <footer class="footer">
-      <div class="footer-container">
-        <div class="footer-section">
+    <footer className="footer">
+      <div className="footer-container">
+        <div className="footer-section">
           <ul>
-            <span class="footer-title">Frontend</span>
-            <li class="footer-item">HTML</li>
-            <li class="footer-item">SCSS</li>
-            <li class="footer-item">TypeScript</li>
-            <li class="footer-item">React</li>
+            <span className="footer-title">Frontend</span>
+            <li className="footer-item">HTML</li>
+            <li className="footer-item">SCSS</li>
+            <li className="footer-item">TypeScript</li>
+            <li className="footer-item">React</li>
           </ul>
           <ul>
-            <span class="footer-title">Backend</span>
-            <li class="footer-item">Node.js</li>
-            <li class="footer-item">Express</li>
-            <li class="footer-item">MongoDB</li>
-            <li class="footer-item">Mongoose</li>
+            <span className="footer-title">Backend</span>
+            <li className="footer-item">Node.js</li>
+            <li className="footer-item">Express</li>
+            <li className="footer-item">MongoDB</li>
+            <li className="footer-item">Mongoose</li>
           </ul>
           <ul>
-            <span class="footer-title">Tools</span>
-            <li class="footer-item">VS Code</li>
-            <li class="footer-item">Insomnia</li>
-            <li class="footer-item">Figma</li>
+            <span className="footer-title">Tools</span>
+            <li className="footer-item">VS Code</li>
+            <li className="footer-item">Insomnia</li>
+            <li className="footer-item">Figma</li>
           </ul>
           <ul>
-            <span class="footer-title">Fonts</span>
-            <li class="footer-item">Roboto</li>
-            <li class="footer-item">Roboto Condensed</li>
-            <li class="footer-item">Passion One</li>
+            <span className="footer-title">Fonts</span>
+            <li className="footer-item">Roboto</li>
+            <li className="footer-item">Roboto Condensed</li>
+            <li className="footer-item">Passion One</li>
           </ul>
-          <ul class="footer-api">
-            <span class="footer-title">API Used</span>
+          <ul className="footer-api">
+            <span className="footer-title">API Used</span>
             <a href="https://themoviedb.org/">
               <TheMovieDatabaseIcon />
             </a>
           </ul>
         </div>
-        <div class="contact-info">
-          <div class="contact-item">
-            <span class="footer-title">Get in touch</span>
-            <span class="footer-item">calderon.miko.00149@dyci.edu.ph</span>
+        <div className="contact-info">
+          <div className="contact-item">
+            <span className="footer-title">Get in touch</span>
+            <span className="footer-item">calderon.miko.00149@dyci.edu.ph</span>
           </div>
-          <div class="contact-item">
-            <span class="footer-title">Follow me on social media</span>
-            <div class="social-media">
+          <div className="contact-item">
+            <span className="footer-title">Follow me on social media</span>
+            <div className="social-media">
               <a href="https://x.com/Utamikoo">
                 <Twitter />
               </a>
@@ -62,7 +61,7 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          <span class="footer-copy">© 2024 tskr<span className='text-[#FF8731]'>!</span> All rights reserved.</span>
+          <span className="footer-copy">© 2024 tskr<span className='text-[#FF8731]'>!</span> All rights reserved.</span>
         </div>
       </div>
     </footer>

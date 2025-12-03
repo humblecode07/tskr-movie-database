@@ -1,7 +1,5 @@
-import React from 'react'
-
-const MovieStatus = ({ primaryDetails, setPrimaryDetails }) => {
-  const handleChange = (e) => {
+const MovieStatus = ({ primaryDetails, setPrimaryDetails } : any) => {
+  const handleChange = (e : any) => {
     setPrimaryDetails({ ...primaryDetails, status: e.target.value })
   }
 

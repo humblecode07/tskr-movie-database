@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import EditIcon from '../../assets/Icons/Admin/EditIcon';
 import DeleteIcon from '../../assets/Icons/Admin/DeleteIcon';
 import StarLIcon from '../../assets/Icons/StarLIcon';
@@ -7,9 +7,9 @@ import { FacebookIcon, HomepageIcon, IMDbIcon, InstagramIcon, TwitterIcon, WikiD
 import { deleteMovie } from '../../api/api';
 import { NavLink } from 'react-router-dom';
 
-const OverviewPanel = ({ data, isInfoVisible, panelRef, setIsInfoVisible, filteredMovies, setFilteredMovies }) => {
+const OverviewPanel = ({ data, isInfoVisible, panelRef, setIsInfoVisible, filteredMovies, setFilteredMovies } : any) => {
    useEffect(() => {
-      const handleClickOutside = (event) => {
+      const handleClickOutside = (event : any) => {
          if (panelRef.current && !panelRef.current.contains(event.target)) {
             setIsInfoVisible(false);
          }
@@ -26,25 +26,25 @@ const OverviewPanel = ({ data, isInfoVisible, panelRef, setIsInfoVisible, filter
       };
    }, [isInfoVisible, panelRef, setIsInfoVisible]);
 
-   const getDynamicFontSize = (title) => {
+   const getDynamicFontSize = (title : any) => {
       const length = title.length;
       if (length > 30) {
          return 'small';
       }
       else if (length > 20) {
-         return 'medium'; e
+         return 'medium';
       }
       return 'large';
    };
 
-   const handleDeleteMovie = async (id) => {
+   const handleDeleteMovie = async (id : any) => {
       const isConfirmed = window.confirm("Are you sure you want to delete this movie?");
 
       if (isConfirmed) {
          try {
             await deleteMovie(id);
             alert("Movie has been deleted successfully.");
-            setFilteredMovies(filteredMovies.filter((movie) => movie._id !== id));
+            setFilteredMovies(filteredMovies.filter((movie : any) => movie._id !== id));
          }
          catch (error) {
             console.error("Error deleting the movie:", error);
@@ -107,7 +107,7 @@ const OverviewPanel = ({ data, isInfoVisible, panelRef, setIsInfoVisible, filter
                <div className=' w-full flex flex-col gap-[1rem] items-center'>
                   <div className='flex gap-[.5rem]'>
                      {data?.genres?.length > 0 ? (
-                        data.genres.map((genre, index) => {
+                        data.genres.map((genre : any, index : number) => {
                            return (
                               <div key={index} className='py-[0.25rem] px-[0.71875rem] flex items-center justify-center gap-[0.4375rem] bg-[#909090] text-[0.625rem] rounded-full'>
                                  <div className='w-[0.3125rem] h-[0.3125rem] bg-[#111111] rounded-full'></div>
@@ -151,7 +151,7 @@ const OverviewPanel = ({ data, isInfoVisible, panelRef, setIsInfoVisible, filter
                         <span className='font-bold'>Writers</span>
                         <div className='flex gap-[.875rem]'>
                            {data.writers && data.writers.length > 0 ? (
-                              data.writers.map((writer, index) => (
+                              data.writers.map((writer : any, index : number) => (
                                  <>
                                     <span key={index} className='flex items-center'>
                                        <a className='text-[#4397FA]'>{writer}</a>
@@ -170,7 +170,7 @@ const OverviewPanel = ({ data, isInfoVisible, panelRef, setIsInfoVisible, filter
                            <span className='font-bold'>Stars</span>
                            <div className='flex flex-wrap gap-[.875rem]'>
                               {data.stars && data.stars.length > 0
-                                 ? data.stars.map((star, index) => (
+                                 ? data.stars.map((star : any, index : number) => (
                                     <>
                                        <span key={index} className='flex items-center'>
                                           <a className='text-[#4397FA] text-wrap'>{star}</a>

@@ -1,4 +1,3 @@
-import React from 'react'
 import MovieCarousel from '../MovieCarousel'
 
 const Upcoming = () => {

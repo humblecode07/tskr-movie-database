@@ -1,5 +1,3 @@
-import React from 'react'
-
 const RightIconTwoS = () => {
    return (
       <svg className='flex-shrink-0' width="11" height="16" viewBox="0 0 11 16" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import StarIcon from '../../../assets/Icons/StarIcon'
 import { NavLink } from 'react-router-dom';
 
-const UpNextShow = ({ movieData }) => {
+const UpNextShow = ({ movieData } : any) => {
   const [currentStartIndex, setCurrentStartIndex] = useState(0);
   const cardsToShow = 3;
   const slideCount = movieData.length;

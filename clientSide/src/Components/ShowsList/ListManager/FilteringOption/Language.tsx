@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import ArrowIcon from '../../../../assets/Icons/ArrowIcon'
 import { originalLanguageList } from '../../../../api/api';
 import { ContextMovies } from '../../../../pages/Lists/MovieList';
@@ -8,7 +8,7 @@ const Language = () => {
   const moviesContext = useContext(ContextMovies);
   const tvShowsContext = useContext(ContextTvShows);
   const context = moviesContext || tvShowsContext;
-  const { filters, handleFilterChange, setCurrentPage } = context || {};
+  const { filters, handleFilterChange, setCurrentPage } : any = context || {};
   const [languages, setLanguages] = useState([]);
   const [originalLanguage, setOriginalLanguage] = useState(
     filters.originalLanguage?.english_name || 'No Language'
@@ -29,7 +29,7 @@ const Language = () => {
     fetchLanguages();
   }, []);
 
-  function handleLanguageSelect(langCode, langName) {
+  function handleLanguageSelect(langCode : any, langName : any) {
     const updatedLanguage = {
       iso_639_1: langCode,
       english_name: langName
@@ -54,7 +54,7 @@ const Language = () => {
         </div>
         {isDropdownOpen && (
           <div className='w-[16.375rem] max-h-[12rem] bg-[#1C252F] rounded-[5px] mt-[0.5rem] absolute overflow-auto z-[3]'>
-            {languages.map((language) => {
+            {languages.map((language : any) => {
               return (
                 <div
                   key={language.iso_639_1}

@@ -5,7 +5,7 @@ import useAuth from '../hooks/useAuth';
 
 const PersistLogin = () => {
    const refresh = useRefreshToken();
-   const { user } = useAuth();
+   const { user } : any = useAuth();
 
    const { isLoading, isError } = useQuery({
       queryKey: ['refreshToken'], // Query key in array form

@@ -1,7 +1,5 @@
-import React from 'react'
-
-const Runtime = ({ primaryDetails, setPrimaryDetails }) => {
-  const handleChange = (e) => {
+const Runtime = ({ primaryDetails, setPrimaryDetails } : any) => {
+  const handleChange = (e : any) => {
     setPrimaryDetails({ ...primaryDetails, runtime: e.target.value })
   }
 

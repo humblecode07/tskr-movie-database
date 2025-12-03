@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import LanguageSearch from './LanguageSearch'
 
-const LanguageSearchBar = ({ releaseDate, setReleaseDate }) => {
+const LanguageSearchBar = ({ releaseDate, setReleaseDate } : any) => {
    const [results, setResults] = useState([]);
 
    return (
@@ -16,7 +16,7 @@ const LanguageSearchBar = ({ releaseDate, setReleaseDate }) => {
          </div>
          {results.length > 0 && (
             <div className="absolute z-10 w-full mt-1 bg-[#2C2C2C] border border-[#444444] rounded-md shadow-lg max-h-60 overflow-y-auto">
-               {results.map((language) => (
+               {results.map((language : any) => (
                   <div
                      key={language.iso_639_1}
                      className="px-3 py-2 hover:bg-[#444444] cursor-pointer"

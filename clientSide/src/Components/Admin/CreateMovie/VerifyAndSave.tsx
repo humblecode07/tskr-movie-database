@@ -1,6 +1,4 @@
-import React from 'react';
-
-const VerifyAndSave = ({ movieDetails }) => {
+const VerifyAndSave = ({ movieDetails } : any) => {
   const detailLabels = {
     original_title: 'Original Title',
     overview: 'Overview',

@@ -1,8 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { fetchGenreList } from '../../../api/api';
 
-const AddGenreModal = ({ isModalOpen, setIsModalOpen, genre, setGenre, onSave }) => {
-   const [genreList, setGenreList] = useState([]);
+type AddGenreModalProps = {
+   isModalOpen: boolean;
+   setIsModalOpen: (open: boolean) => void;
+   genre: string;
+   setGenre: (genre: string) => void;
+   onSave: () => void;
+};
+
+type Genre = {
+   name: string;
+};
+
+const AddGenreModal: React.FC<AddGenreModalProps> = ({
+   isModalOpen,
+   setIsModalOpen,
+   genre,
+   setGenre,
+   onSave,
+}) => {
+   
+   const [genreList, setGenreList] = useState<Genre[]>([]);
 
    useEffect(() => {
       const fetchGenres = async () => {
@@ -35,7 +54,7 @@ const AddGenreModal = ({ isModalOpen, setIsModalOpen, genre, setGenre, onSave })
                </div>
                <div className="space-y-4">
                   <div>
-                     <label for="type" className="block text-sm font-medium mb-2">Genres</label>
+                     <label htmlFor="type" className="block text-sm font-medium mb-2">Genres</label>
                      <div className='w-full h-[2.3125rem] flex justify-center items-center bg-transparent border-solid border-[1px] border-white rounded-sm'>
                         <div className='w-[38.75rem]'>
                            <select

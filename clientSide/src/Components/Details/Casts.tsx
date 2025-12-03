@@ -1,10 +1,9 @@
-import React from 'react'
 import RightIconTwo from '../../assets/Icons/RightIconTwo'
 import DividerTwo from './DividerTwo'
 import RightIconTwoS from '../../assets/Icons/RightIconTwoS'
 import { NavLink } from 'react-router-dom'
 
-const Casts = ({ data }) => {
+const Casts = ({ data } : any) => {
    if (data) {
       return (
          <div className='w-[38.4375rem] flex flex-col gap-[1.4375rem]'>
@@ -19,7 +18,7 @@ const Casts = ({ data }) => {
                </div>
             </NavLink>
             <div className='flex gap-[0.9375rem] flex-wrap'>
-               {data.casts.map((cast, index) => {
+               {data.casts.map((cast : any, index : number) => {
                   if (index < 18) {
                      return (
                         <a key={cast.cast_id} className='w-[18.75rem] flex gap-[0.9375rem] items-center'>
@@ -54,7 +53,7 @@ const Casts = ({ data }) => {
                            <span className='font-bold'>Writers</span>
                            <div className='w-[30rem] flex flex-wrap gap-[0.5rem]'>
                               {data.writers && data.writers.length > 0
-                                 ? data.writers.map((writer, index) => (
+                                 ? data.writers.map((writer : any, index : number) => (
                                     <>
                                        <span key={index} className='flex items-center'>
                                           <a className='text-[#4397FA]'>{writer}</a>
@@ -76,7 +75,7 @@ const Casts = ({ data }) => {
                         <span className='font-bold'>Created By</span>
                         <div className='w-[30rem] flex flex-wrap gap-[0.5rem]'>
                            {data.created_by && data.created_by.length > 0
-                              ? data.created_by.map((creator, index) => (
+                              ? data.created_by.map((creator : any, index : number) => (
                                  <>
                                     <span key={index} className='flex items-center'>
                                        <a className='text-[#4397FA]'>{creator}</a>

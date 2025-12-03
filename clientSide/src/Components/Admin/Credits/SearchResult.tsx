@@ -1,7 +1,6 @@
-import React from 'react'
 import IgopImg from '../../../assets/Image/Igop.jpg'
 
-const SearchResult = ({ data, onSelect }) => {
+const SearchResult = ({ data, onSelect } : any) => {
    return (
       <div
          className="flex items-center p-2 hover:bg-[#3C3C3C] cursor-pointer"
@@ -11,8 +10,8 @@ const SearchResult = ({ data, onSelect }) => {
             src={`https://image.tmdb.org/t/p/w500${data.profile_path}`}
             alt={data.name}
             className="w-[3rem] h-[3rem] rounded-full mr-4 object-cover"
-            onError={(e) => {
-               e.target.onerror = null;
+            onError={(e : any) => {
+               e.target.onError = null;
                e.target.src = IgopImg;
             }}
          />

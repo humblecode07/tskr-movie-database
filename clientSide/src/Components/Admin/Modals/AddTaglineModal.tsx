@@ -1,6 +1,4 @@
-import React from 'react'
-
-const AddTaglineModal = ({ isModalOpen, setIsModalOpen, tagline, setTagline, onSave }) => {
+const AddTaglineModal = ({ isModalOpen, setIsModalOpen, tagline, setTagline, onSave } : any) => {
 
    return (
       isModalOpen && (
@@ -18,7 +16,7 @@ const AddTaglineModal = ({ isModalOpen, setIsModalOpen, tagline, setTagline, onS
                   </button>
                </div>
                <div>
-                  <label for="tagline" className="block text-sm font-medium mb-2">Tagline</label>
+                  <label htmlFor="tagline" className="block text-sm font-medium mb-2">Tagline</label>
                   <input
                      type="text"
                      className="w-full bg-[#2C2C2C] border border-[#444444] rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#CC511D]"

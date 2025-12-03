@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { countryListApi, watchProviderApi } from '../../../../api/api';
 import ArrowIcon from '../../../../assets/Icons/ArrowIcon';
 import CheckIcon from '../../../../assets/Icons/CheckIcon';
@@ -9,7 +9,7 @@ const WatchProvider = () => {
    const moviesContext = useContext(ContextMovies);
    const tvShowsContext = useContext(ContextTvShows);
    const context = moviesContext || tvShowsContext;
-   const { streamType, filters, handleFilterChange, setCurrentPage } = context || {};
+   const { streamType, filters, handleFilterChange, setCurrentPage } : any = context || {};
    const [countries, setCountries] = useState([]);
    const [selectedCountry, setSelectedCountry] = useState({
       name: filters.watchProviders.name,
@@ -35,7 +35,7 @@ const WatchProvider = () => {
       fetchWatchProvider();
    }, [streamType, selectedCountry.iso_3166_1])
 
-   function handleCountrySelect(country) {
+   function handleCountrySelect(country : any) {
       setSelectedCountry({
          name: country.english_name,
          iso_3166_1: country.iso_3166_1
@@ -49,11 +49,11 @@ const WatchProvider = () => {
       setCurrentPage(1);
    }
 
-   function handleMovieProviderToggle(providerData) {
+   function handleMovieProviderToggle(providerData : any) {
       const { provider_id } = providerData;
 
       const updatedMoviePlatforms = filters.watchProviders.moviePlatform.includes(provider_id)
-         ? filters.watchProviders.moviePlatform.filter(id => id !== provider_id)
+         ? filters.watchProviders.moviePlatform.filter((id : any) => id !== provider_id)
          : [...filters.watchProviders.moviePlatform, provider_id];
 
       handleFilterChange('watchProviders', {
@@ -78,7 +78,7 @@ const WatchProvider = () => {
                </div>
                {isDropdownOpen && (
                   <div className='w-[12.125rem] max-h-[12rem] bg-[#1C252F] rounded-[5px] mt-[0.5rem] absolute overflow-auto z-[3]'>
-                     {countries.map((country) => {
+                     {countries.map((country : any) => {
                         return (
                            <div
                               key={country.iso_3166_1}
@@ -94,7 +94,7 @@ const WatchProvider = () => {
             </div>
          </div>
          <ul className='flex gap-[1.375rem] flex-wrap'>
-            {watchProvider.map((data) => {
+            {watchProvider.map((data : any) => {
                const isSelected = filters.watchProviders.moviePlatform.includes(data.provider_id);
 
                return (

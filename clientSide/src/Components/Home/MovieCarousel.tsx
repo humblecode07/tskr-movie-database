@@ -1,11 +1,11 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CarouselButtons, WatchlistButton } from '../Button/Buttons';
 import StarOutline from '../../assets/Icons/StarOutline';
 import StarIcon from '../../assets/Icons/StarIcon';
 import { NavLink } from 'react-router-dom';
 
-const MovieCarousel = ({ section, query }) => {
+const MovieCarousel = ({ section, query } : any) => {
    let MOVIE_API = ``;
 
    if (section === 0) {
@@ -54,7 +54,7 @@ const MovieCarousel = ({ section, query }) => {
    return (
       <div className='carousel-container'>
          {slideCard !== 0 ? <CarouselButtons direction="left" slideDirection={prevSlide} /> : null}
-         {movieTrend.slice(slideCard, slideCard + cardsToShow).map((data, index) => (
+         {movieTrend.slice(slideCard, slideCard + cardsToShow).map((data : any, index) => (
             <NavLink
                to={`${data.title ? 'movies' : 'tv'}/${data.id}-${(data.title || data.name).replace(/\s+/g, "-").toLowerCase()}`} 
                className='card' 

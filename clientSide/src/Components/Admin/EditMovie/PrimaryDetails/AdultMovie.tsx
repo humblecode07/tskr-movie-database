@@ -1,7 +1,5 @@
-import React from 'react'
-
-const AdultMovie = ({ primaryDetails, setPrimaryDetails }) => {
-  const handleChange = (e) => {
+const AdultMovie = ({ primaryDetails, setPrimaryDetails } : any) => {
+  const handleChange = (e : any) => {
     setPrimaryDetails({ ...primaryDetails, adult: e.target.value === "true" })
   }
 

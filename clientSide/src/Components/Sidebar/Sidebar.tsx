@@ -1,4 +1,3 @@
-import React from 'react'
 import MovieIcon from '../../assets/Icons/Admin/MovieIcon'
 import TvShowIcon from '../../assets/Icons/Admin/TvShowIcon'
 import PeopleIcon from '../../assets/Icons/Admin/PeopleIcon'

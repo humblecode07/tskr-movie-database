@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import YoutubeIcon from '../../assets/Icons/YoutubeIcon';
 
-const Videos = ({ data }) => {
+const Videos = ({ data } : any) => {
    const videoType = ['Trailer', 'Teaser', 'Clip', 'Behind the Scenes', 'Bloopers', 'Featurette'];
 
    const initialType = videoType.find(type => data[type]) || null;
-   const [selectedType, setSelectedType] = useState(initialType);
+   const [selectedType, setSelectedType] : any = useState(initialType);
    const [selectedVideo, setSelectedVideo] = useState(null); // Track the selected video for fullscreen modal
 
-   const convertDuration = (duration) => {
+   console.log(selectedVideo)
+
+   const convertDuration = (duration : any) => {
       const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
       const minutes = match[2] ? parseInt(match[2]) : 0;
       const seconds = match[3] ? parseInt(match[3]) : 0;
@@ -18,18 +20,10 @@ const Videos = ({ data }) => {
       return `${minutes}:${formattedSeconds}`;
    };
 
-   const formatDate = (dateString) => {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+   const formatDate = (dateString : any) => {
+      const options : any = { year: 'numeric', month: 'long', day: 'numeric' };
       const date = new Date(dateString);
       return date.toLocaleDateString('en-US', options);
-   };
-
-   const closeModal = () => {
-      setSelectedVideo(null); // Close the fullscreen modal
-   };
-
-   const openVideoModal = (videoKey) => {
-      setSelectedVideo(videoKey); // Set the selected video for fullscreen modal
    };
 
    if (data) {
@@ -51,7 +45,7 @@ const Videos = ({ data }) => {
             </ul>
             <div className={`w-[46.875rem] h-full flex flex-col flex-grow-0 flex-wrap gap-[1.7rem]`}>
                {data[selectedType] && data[selectedType].length > 0 ? (
-                  data[selectedType].map((video, index) => (
+                  data[selectedType].map((video : any, index : number) => (
                      <div className='flex gap-[1.5625rem]' key={index}>
                         <img
                            src={`https://i.ytimg.com/vi/${video.key}/hqdefault.jpg`}

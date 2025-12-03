@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Search from './Search';
 import SearchResultList from './SearchResultList';
 
-const SearchBar = ({ selectedPerson, setSelectedPerson, type }) => {
+const SearchBar = ({ selectedPerson, setSelectedPerson, type } : any) => {
    const [results, setResults] = useState([]);
 
-   const handleSelectPerson = (person) => {
+   const handleSelectPerson = (person : any) => {
       setSelectedPerson(person);
       setResults([]); 
    };

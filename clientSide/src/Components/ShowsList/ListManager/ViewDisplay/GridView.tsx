@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import PlusIcon from '../../../../assets/Icons/PlusIcon'
 import InfoIcon from '../../../../assets/Icons/InfoIcon'
 import StarIcon from '../../../../assets/Icons/StarIcon'
@@ -6,13 +6,13 @@ import MiguImg from '../../../../assets/Image/migu.jpg'
 import StarOutline from '../../../../assets/Icons/StarOutline'
 import DetailModal from './DetailModal'
 
-const GridView = ({ streams, people }) => {
+const GridView = ({ streams, people } : any) => {
    const [activeDetailModal, setActiveDetailModal] = useState(null);
 
    if (streams) {
       return (
          <div className='flex w-[66.5625rem] gap-[1.375rem] flex-wrap'>
-            {streams.map(stream => {
+            {streams.map((stream : any) => {
                return (
                   <div
                      key={stream.id}
@@ -61,7 +61,7 @@ const GridView = ({ streams, people }) => {
    else if (people) {
       return (
          <div className='flex w-[66.5625rem] gap-[1.375rem] flex-wrap'>
-            {people.map((person) => {
+            {people.map((person : any) => {
                return (
                   <div
                      key={person.id}
@@ -78,7 +78,7 @@ const GridView = ({ streams, people }) => {
                            {person.known_for_department}
                         </span>
                         <span className='text-[0.875rem] truncate-lines'>
-                           Known for: {person.known_for?.map((movie, index) => (
+                           Known for: {person.known_for?.map((movie : any, index : number) => (
                               <span key={index}>{movie.title || movie.original_name}{index < person.known_for.length - 1 ? ', ' : ''}</span>
                            ))}
                         </span>

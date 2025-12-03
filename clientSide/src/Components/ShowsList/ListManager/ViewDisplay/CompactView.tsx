@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import StarIcon from '../../../../assets/Icons/StarIcon';
 import PlusIcon from '../../../../assets/Icons/PlusIcon';
 import InfoIcon from '../../../../assets/Icons/InfoIcon';
@@ -6,7 +6,7 @@ import DetailModal from './DetailModal';
 import MiguImg from '../../../../assets/Image/migu.jpg'
 import { Link } from 'react-router-dom';
 
-const CompactView = ({ streams }) => {
+const CompactView = ({ streams } : any) => {
   const [activeDetailModal, setActiveDetailModal] = useState(null);
 
   if (!streams) {
@@ -15,7 +15,7 @@ const CompactView = ({ streams }) => {
 
   return (
     <div className='flex w-[66.5625rem] gap-[1.375rem] flex-wrap'>
-      {streams?.map(stream => {
+      {streams?.map((stream : any) => {
         return (
           <Link
             to={`${stream.id}-${(stream.original_title?.toLowerCase() || stream.original_name?.toLowerCase() || 'default-title').replace(/\s+/g, '-')}`}
@@ -27,7 +27,7 @@ const CompactView = ({ streams }) => {
               alt={stream.original_title || stream.original_name}
               className='absolute h-full w-full rounded-[0.625rem] object-cover'
             />
-            <div class="absolute inset-0 rounded-lg bg-gradient-to-r from-[#111111] via-transparent to-[#111111]/0"></div>
+            <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[#111111] via-transparent to-[#111111]/0"></div>
             <div className='w-full h-full flex absolute items-end'>
               <div className='w-full flex items-center justify-around pb-[.5rem]'>
                 <div className='flex flex-col w-[65%]'>

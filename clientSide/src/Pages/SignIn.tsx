@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { axiosPrivate } from '../api/api';
 import { jwtDecode } from 'jwt-decode';
 import useAuth from '../hooks/useAuth';
@@ -11,7 +11,7 @@ const userRole = Number(import.meta.env.VITE_YT_ROLE_USER);
 const adminRole = Number(import.meta.env.VITE_YT_ROLE_ADMIN);
 
 const SignIn = () => {
-  const { user, setUser } = useAuth();
+  const { user, setUser } : any = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -40,7 +40,7 @@ const SignIn = () => {
 
       const accessToken = response.data.accessToken;
       const decodedToken = jwtDecode(accessToken);
-      const { roles } = decodedToken;
+      const { roles } : any = decodedToken;
 
       localStorage.setItem("jwt", response.data.refreshToken);
       setUser({ email, accessToken, roles });

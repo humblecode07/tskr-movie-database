@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { languages } from '../../../api/api';
 import DividerTwo from '../../Details/DividerTwo';
 
-const fetchImageData = async (movieData, mediaType) => {
+const fetchImageData = async (movieData : any, mediaType : any) => {
    const response = await languages();
 
    const languageMap = response.reduce((acc, lang) => {
@@ -26,7 +26,7 @@ const fetchImageData = async (movieData, mediaType) => {
    }
 }
 
-const Images = ({ movieData }) => {
+const Images = ({ movieData } : any) => {
    const { movieId } = useParams();
    const [selectedImageType, setSelectedImageType] = useState('posters');
    const [selectedLang, setSelectedLang] = useState(null);

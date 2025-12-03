@@ -1,10 +1,9 @@
-import React from 'react'
 import SearchResult from './SearchResult';
 
-const SearchResultList = ({ results, onSelectPerson }) => {
+const SearchResultList = ({ results, onSelectPerson } : any) => {
    return (
       <div>
-         {results.map((result, id) => {
+         {results.map((result : any, id : any) => {
             let searchData = {};
 
             searchData = {

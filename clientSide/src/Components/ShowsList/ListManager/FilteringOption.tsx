@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import FilterIcon from '../../../assets/Icons/FilterIcon'
 import XIcon from '../../../assets/Icons/XIcon';
 import Genres from './FilteringOption/Genres';

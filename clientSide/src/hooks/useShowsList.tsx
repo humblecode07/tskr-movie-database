@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { apiFetch } from '../api/api';
 import _ from 'lodash';
 
-export const useShowsList = (type) => {
+type TMDBParams = Record<string, string | number | undefined>;
+
+export const useShowsList = (type: any) => {
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
@@ -21,7 +23,7 @@ export const useShowsList = (type) => {
   });
 
 
-  const handleFilterChange = (filterName, value) => {
+  const handleFilterChange = (filterName: any, value: any) => {
     setFilters(prevFilters => {
       if (filterName === 'watchProviders') {
         return {
@@ -109,11 +111,11 @@ export const useShowsList = (type) => {
     const selectedKeywords = filters.keyword.keywordIds.join('|');
     const selectedLanguage = filters.originalLanguage.iso_639_1 === 'xx' ? '' : filters.originalLanguage.iso_639_1;
 
-    const params = new URLSearchParams({
+    const queryParams: TMDBParams = {
       include_adult: 'false',
       include_video: 'false',
       language: 'en-US',
-      page: currentPage,
+      page: String(currentPage),
       sort_by: selectedSortBy.value,
       with_genres: selectedGenres || '',
       watch_region: filters.watchProviders.watchRegion || '',
@@ -134,17 +136,17 @@ export const useShowsList = (type) => {
       certification_country: filters.certification.certCountry,
       with_original_language: selectedLanguage,
       with_keywords: selectedKeywords,
-      // 'with_watch_monetization_types': 'flatrate|free|ads|rent|buy',
-    }).toString();
+    };
+
 
     const fetchData = async () => {
       try {
-        const data = await apiFetch(`/discover/${type}?${params}`);
+        const data = await apiFetch(`/discover/${type}?${queryParams}`);
 
         setItems(prevItems => {
           if (currentPage === 1) return data.results;
-          const existingItemIds = new Set(prevItems.map(item => item.id));
-          const newItems = data.results.filter(item => !existingItemIds.has(item.id));
+          const existingItemIds = new Set(prevItems.map((item : any) => item.id));
+          const newItems = data.results.filter((item : any) => !existingItemIds.has(item.id));
           return [...prevItems, ...newItems];
         });
       } catch (error) {

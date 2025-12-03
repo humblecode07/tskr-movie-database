@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { ContextMovies } from '../../../../pages/Lists/MovieList';
 import { ContextTvShows } from '../../../../pages/Lists/TvList';
 
@@ -6,13 +6,13 @@ const ReleaseYear = () => {
   const moviesContext = useContext(ContextMovies);
   const tvShowsContext = useContext(ContextTvShows);
   const context = moviesContext || tvShowsContext;
-  const { streamType, filters, handleFilterChange, setCurrentPage } = context || {};
+  const { streamType, filters, handleFilterChange, setCurrentPage } : any = context || {};
   const [releaseYear, setReleaseYear] = useState({
     gteYear: filters.releaseYear.gteYear,
     lteYear: filters.releaseYear.lteYear
   })
 
-  const handleReleaseYearChange = (e, type) => {
+  const handleReleaseYearChange = (e : any, type : any) => {
     const inputValue = e.target.value;
 
     const updatedReleaseYear = {

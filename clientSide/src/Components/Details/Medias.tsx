@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-const Medias = ({ data }) => {
+const Medias = ({ data } : any) => {
   const params = useParams();
   const [selectedLang, setSelectedLang] = useState(Object.keys(data)[0] || null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -23,6 +23,8 @@ const Medias = ({ data }) => {
       gap: 'gap-[1.7rem]'
     }
   };
+
+  console.log(selectedImage);
 
   const widthClass = mediaDimensions[params.mediaType]?.width;
   const heightClass = mediaDimensions[params.mediaType]?.height;

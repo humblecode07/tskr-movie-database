@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { TabSwitch } from '../../Button/Buttons'
 import MovieCarousel from '../MovieCarousel';
 
 const Popular = () => {
    const [selectedView, setSelectedView] = useState(1);
 
-   const handleCategoryChange = (value) => {
+   const handleCategoryChange = (value : any) => {
       setSelectedView(value);
    };
 

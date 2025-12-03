@@ -1,7 +1,5 @@
-import React from 'react'
-
-const Revenue = ({ primaryDetails, setPrimaryDetails }) => {
-  const handleChange = (e) => {
+const Revenue = ({ primaryDetails, setPrimaryDetails } : any) => {
+  const handleChange = (e : any) => {
     setPrimaryDetails({ ...primaryDetails, revenue: e.target.value })
   }
 

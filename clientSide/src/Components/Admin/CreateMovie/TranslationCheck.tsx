@@ -1,6 +1,4 @@
-import React from 'react';
-
-const TranslationCheck = ({ translation }) => {
+const TranslationCheck = ({ translation } : any) => {
   const message = translation.isValid
     ? 'The input for "overview" was detected in English.'
     : `The input for 'overview' was detected in a language other than English and was translated into ${translation.detectedLang.charAt(0).toUpperCase() + translation.detectedLang.slice(1)}.`;

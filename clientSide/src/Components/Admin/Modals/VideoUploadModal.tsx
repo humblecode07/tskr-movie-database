@@ -1,7 +1,5 @@
-import React from 'react'
-
-const VideoUploadModal = ({ isModalOpen, setIsModalOpen, videoDetails, setVideoDetails, onUpload }) => {
-   const handleChange = (e) => {
+const VideoUploadModal = ({ isModalOpen, setIsModalOpen, videoDetails, setVideoDetails, onUpload } : any) => {
+   const handleChange = (e : any) => {
       const { name, value } = e.target;
 
       setVideoDetails({
@@ -29,7 +27,7 @@ const VideoUploadModal = ({ isModalOpen, setIsModalOpen, videoDetails, setVideoD
                </div>
                <div className="space-y-4">
                   <div>
-                     <label for="type" className="block text-sm font-medium mb-2">Type</label>
+                     <label htmlFor="type" className="block text-sm font-medium mb-2">Type</label>
                      <div className='w-full h-[2.3125rem] flex justify-center items-center bg-transparent border-solid border-[1px] border-white rounded-sm'>
                         <div className='w-[39.625rem]'>
                            <select
@@ -49,7 +47,7 @@ const VideoUploadModal = ({ isModalOpen, setIsModalOpen, videoDetails, setVideoD
                      </div>
                   </div>
                   <div>
-                     <label for="size" className="block text-sm font-medium mb-2">Quality</label>
+                     <label htmlFor="size" className="block text-sm font-medium mb-2">Quality</label>
                      <div className='w-full h-[2.3125rem] flex justify-center items-center bg-transparent border-solid border-[1px] border-white rounded-sm'>
                         <div className='w-[39.625rem]'>
                            <select
@@ -68,7 +66,7 @@ const VideoUploadModal = ({ isModalOpen, setIsModalOpen, videoDetails, setVideoD
                      </div>
                   </div>
                   <div>
-                     <label for="key" className="block text-sm font-medium mb-2">Source Key</label>
+                     <label htmlFor="key" className="block text-sm font-medium mb-2">Source Key</label>
                      <input
                         type="text"
                         className="w-full bg-[#2C2C2C] border border-[#444444] rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#CC511D]"

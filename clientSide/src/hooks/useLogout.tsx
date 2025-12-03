@@ -2,7 +2,7 @@ import { axiosPrivate } from "../api/api";
 import useAuth from "./useAuth";
 
 const useLogout = () => {
-  const { setUser } = useAuth();
+  const { setUser } : any = useAuth();
 
    console.log('amogus')
 

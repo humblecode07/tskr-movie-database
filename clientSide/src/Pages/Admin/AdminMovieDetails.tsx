@@ -1,30 +1,34 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom';
-import { getMyMovieDataApi, languages } from '../../api/api';
+import { getMyMovieDataApi } from '../../api/api';
 import EditIcon from '../../assets/Icons/Admin/EditIcon';
 import StarLIcon from '../../assets/Icons/StarLIcon';
 import StarOutlineLIcon from '../../assets/Icons/StarOutlineLIcon';
 import WatchListSIcon from '../../assets/Icons/WatchListSIcon';
 import HeartIcon from '../../assets/Icons/HeartIcon';
 import { FacebookIcon, HomepageIcon, IMDbIcon, InstagramIcon, TwitterIcon, WikiDataIcon } from '../../assets/Icons/LinkIcons';
-import Divider from '../../components/ShowsList/Divider';
 import DividerTwo from '../../components/Details/DividerTwo';
 import Images from '../../components/Admin/MovieDetails/Images';
 import Recommendations from '../../components/Admin/MovieDetails/Recommendations';
 import Videos from '../../components/Admin/MovieDetails/Videos';
 
-const fetchMovieData = async (movieId) => {
+interface Member {
+	profile_path: string | null;
+	name: string;
+	job: string;
+}
+
+const fetchMovieData = async (movieId: any) => {
 	const response = await getMyMovieDataApi('movie', movieId);
 
 	document.title = response.movie.title;
 
 	const officialTrailer = (response.movie.videos && response.movie.videos.length > 0)
 		? response.movie.videos.filter(
-			video => video.name.toLowerCase().includes('official') && video.name.toLowerCase().includes('trailer')
+			(video: any) => video.name.toLowerCase().includes('official') && video.name.toLowerCase().includes('trailer')
 		)
 		: (!response.movie.videos ? response.movie.videos.filter(
-			video => video.name.toLowerCase().includes('official') && video.name.toLowerCase().includes('trailer')
+			(video: any) => video.name.toLowerCase().includes('official') && video.name.toLowerCase().includes('trailer')
 		) : 0
 		);
 
@@ -32,30 +36,30 @@ const fetchMovieData = async (movieId) => {
 		? `https://www.youtube.com/embed/${officialTrailer[0].key}?si=8l7P2cs2GNCdH2-L`
 		: response.movie?.videos
 			? (() => {
-				const foundVideo = response.movie.videos.find(video => video.type === 'Trailer' && video.site === 'Youtube');
+				const foundVideo = response.movie.videos.find((video: any) => video.type === 'Trailer' && video.site === 'Youtube');
 				return foundVideo ? `https://www.youtube.com/embed/${foundVideo.key}?si=8l7P2cs2GNCdH2-L` : null;
 			})()
 			: response.movie.videos
 				? (() => {
-					const foundVideo = response.movie.videos.find(video => video.type === 'Trailer' && video.site === 'Youtube');
+					const foundVideo = response.movie.videos.find((video: any) => video.type === 'Trailer' && video.site === 'Youtube');
 					return foundVideo ? `https://www.youtube.com/embed/${foundVideo.key}?si=8l7P2cs2GNCdH2-L` : null;
 				})()
 				: null;
 
-	const certifications = response.movie.release_dates?.results.filter((country) =>
+	const certifications = response.movie.release_dates?.results.filter((country: any) =>
 		[response.movie.origin_country[0], "US"].includes(country.iso_3166_1)
 	);
 
-	const director = response.movie.credits.crew.find((member) => member.job === "Director");
-	const writers = response.movie.credits.crew.filter((member) => member.department === "Writing").slice(0, 3).map((writer) => writer.name);
-	const stars = response.movie.credits.cast.slice(0, 3).map((star) => star.name);
+	const director = response.movie.credits.crew.find((member: any) => member.job === "Director");
+	const writers = response.movie.credits.crew.filter((member: any) => member.department === "Writing").slice(0, 3).map((writer: any) => writer.name);
+	const stars = response.movie.credits.cast.slice(0, 3).map((star: any) => star.name);
 
 	const hours = response.movie.runtime ? Math.floor(response.movie.runtime / 60) : 0;
 	const minutes = response.movie.runtime ? response.movie.runtime % 60 : 0;
 
 	const crewCount = response.movie.credits.crew.length;
 
-	const groupedCrew = response.movie.credits.crew.reduce((acc, member) => {
+	const groupedCrew = response.movie.credits.crew.reduce((acc: any, member: any) => {
 		if (!acc[member.department]) acc[member.department] = [];
 
 		acc[member.department].push(member);
@@ -67,8 +71,8 @@ const fetchMovieData = async (movieId) => {
 		...response.movie,
 		trailer: trailer,
 		certifications:
-			certifications[0]?.release_dates?.find(item => item.certification !== '')?.certification ||
-			certifications[1]?.release_dates?.find(item => item.certification !== '')?.certification ||
+			certifications[0]?.release_dates?.find((item: any) => item.certification !== '')?.certification ||
+			certifications[1]?.release_dates?.find((item: any) => item.certification !== '')?.certification ||
 			undefined,
 		director: director ? director.name : undefined,
 		writers: writers.length > 0 ? writers : undefined,
@@ -84,7 +88,7 @@ const fetchMovieData = async (movieId) => {
 		}).format(response.movie.revenue),
 		vote_average: response.movie.vote_average.toFixed(1) || 0,
 		vote_count: ((response.movie.vote_count / 1000).toFixed(1) + 'k'),
-		genres: response.movie.genres.map((genre) => genre.name).slice(0, 3),
+		genres: response.movie.genres.map((genre: any) => genre.name).slice(0, 3),
 		release_date: new Date(response.movie.release_date).toLocaleDateString('en-PH'),
 		credits: {
 			cast: response.movie.credits.cast,
@@ -141,7 +145,7 @@ const AdminMovieDetails = () => {
 								{data.release_date}
 							</span>
 							<div>
-								{data.genres.map((genre, index) => (
+								{data.genres.map((genre: any, index: any) => (
 									<span key={index}>
 										{genre}{index < data.genres.length - 1 && ", "}
 									</span>
@@ -212,7 +216,7 @@ const AdminMovieDetails = () => {
 						<span className='font-bold'>Writers</span>
 						<div className='flex gap-[.875rem]'>
 							{data.writers && data.writers.length > 0 ? (
-								data.writers.map((writer, index) => (
+								data.writers.map((writer: any, index: any) => (
 									<>
 										<span key={index} className='flex items-center'>
 											<a className='text-[#4397FA]'>{writer}</a>
@@ -231,7 +235,7 @@ const AdminMovieDetails = () => {
 							<span className='font-bold'>Stars</span>
 							<div className='flex flex-wrap gap-[.875rem]'>
 								{data.stars && data.stars.length > 0
-									? data.stars.map((star, index) => (
+									? data.stars.map((star: any, index: number) => (
 										<>
 											<span key={index} className='flex items-center'>
 												<a className='text-[#4397FA] text-wrap'>{star}</a>
@@ -328,7 +332,7 @@ const AdminMovieDetails = () => {
 						</div>
 					</div>
 					<ul className='h-full flex flex-col gap-[2rem] overflow-auto scrollbar-none'>
-						{data.credits.cast.map((member, index) => {
+						{data.credits.cast.map((member: any, index: number) => {
 							return (
 								<li key={index} className='flex gap-[1.1875rem]'>
 									<img
@@ -356,22 +360,24 @@ const AdminMovieDetails = () => {
 						</div>
 					</div>
 					<div className='h-full flex flex-col gap-[2rem] overflow-auto scrollbar-none'>
-						{Object.entries(data.credits.crew).map(([department, members]) => (
+						{Object.entries(data.credits.crew).map(([department, members] : any) => (
 							<div key={department} className='flex flex-col gap-[.875rem]'>
 								<h2 className='text-[1rem] text-[#9E9E9E] font-bold'>{department}</h2>
 								<ul className='flex flex-col gap-[0.5625rem]'>
-									{members.map((member, index) => (
-										<li key={index} className='flex gap-[1.1875rem]'>
+									{members.map((member: Member, index: number) => (
+										<li key={index} className="flex gap-[1.1875rem]">
 											<img
-												className='w-[4.125rem] h-[4.125rem] rounded-full object-cover'
-												src={member.profile_path
-													? `https://image.tmdb.org/t/p/original${member.profile_path}`
-													: 'https://placehold.co/66x66'}
+												className="w-[4.125rem] h-[4.125rem] rounded-full object-cover"
+												src={
+													member.profile_path
+														? `https://image.tmdb.org/t/p/original${member.profile_path}`
+														: "https://placehold.co/66x66"
+												}
 												alt={member.name}
 											/>
-											<div className='flex flex-col justify-center'>
-												<span className='font-bold'>{member.name}</span>
-												<span className='text-[#8E8E8E]'>{member.job}</span>
+											<div className="flex flex-col justify-center">
+												<span className="font-bold">{member.name}</span>
+												<span className="text-[#8E8E8E]">{member.job}</span>
 											</div>
 										</li>
 									))}

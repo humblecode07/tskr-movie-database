@@ -1,7 +1,5 @@
-import React from 'react'
-
-const AdditionalDetails = ({ movieDetails, dispatch }) => {
-  const handleChange = (e) => {
+const AdditionalDetails = ({ movieDetails, dispatch } : any) => {
+  const handleChange = (e : any) => {
     const { name, value } = e.target;
     dispatch({
       type: 'SET_MOVIE_DETAILS',

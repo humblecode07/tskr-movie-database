@@ -1,10 +1,9 @@
-import React from 'react'
 import StarIcon from '../../assets/Icons/StarIcon'
 import PlusIcon from '../../assets/Icons/PlusIcon'
 import InfoIcon from '../../assets/Icons/InfoIcon'
 import { NavLink } from 'react-router-dom';
 
-const Recommendation = ({ data }) => {
+const Recommendation = ({ data } : any) => {
   if (data) {
     const recommendations = data.recommendations.results || data.recommendations;
 
@@ -17,7 +16,7 @@ const Recommendation = ({ data }) => {
           Recommendations
         </span>
         <div className="flex flex-col gap-[1rem]">
-          {recommendations && recommendations.slice(0, 7).map((recommendation) => (
+          {recommendations && recommendations.slice(0, 7).map((recommendation : any) => (
             <NavLink
               to={`/${mediaType}/${recommendation.id}-${(recommendation.title || recommendation.name).replace(/\s+/g, "-").toLowerCase()}`} 
               key={recommendation.id} 

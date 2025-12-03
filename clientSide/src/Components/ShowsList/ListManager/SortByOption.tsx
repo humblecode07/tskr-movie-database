@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import ArrowIcon from '../../../assets/Icons/ArrowIcon'
 
 const sortByMovie = [
@@ -23,10 +23,10 @@ const sortByTv = [
   { value: "vote_count.desc", label: "Vote Count Descending" }
 ];
 
-const SortByOption = ({ stream, selectedSorting, setSelectedSorting, resetCurrentPage }) => {
+const SortByOption = ({ stream, selectedSorting, setSelectedSorting, resetCurrentPage } : any) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  function handleSelectedSortBy(value, label) {
+  function handleSelectedSortBy(value : any, label : any) {
     setSelectedSorting({
       value,
       label

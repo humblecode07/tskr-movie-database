@@ -3,7 +3,7 @@ import CountrySearchBar from '../EditMovie/ReleaseDates/CountrySearchBar';
 import LanguageSearchBar from '../EditMovie/ReleaseDates/LanguageSearchBar';
 import CertificationsSelect from '../EditMovie/ReleaseDates/CertificationsSelect';
 
-const AddReleaseDateModal = ({ isModalOpen, setIsModalOpen, onSave }) => {
+const AddReleaseDateModal = ({ isModalOpen, setIsModalOpen, onSave } : any) => {
    const [releaseDate, setReleaseDate] = useState({
       country: {
          name: "",
@@ -48,7 +48,7 @@ const AddReleaseDateModal = ({ isModalOpen, setIsModalOpen, onSave }) => {
                      setReleaseDate={setReleaseDate}
                   />
                   <div>
-                     <label for="date" className="block text-sm font-medium mb-2">Tagline</label>
+                     <label htmlFor="date" className="block text-sm font-medium mb-2">Tagline</label>
                      <input
                         type="date"
                         className="w-full bg-[#2C2C2C] border border-[#444444] rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#CC511D]"
@@ -60,7 +60,7 @@ const AddReleaseDateModal = ({ isModalOpen, setIsModalOpen, onSave }) => {
                      />
                   </div>
                   <div>
-                     <label for="type" className="block text-sm font-medium mb-2">Type</label>
+                     <label htmlFor="type" className="block text-sm font-medium mb-2">Type</label>
                      <div className='w-full h-[2.3125rem] flex justify-center items-center bg-transparent border-solid border-[1px] border-white rounded-sm'>
                         <div className='w-[39.625rem]'>
                            <select

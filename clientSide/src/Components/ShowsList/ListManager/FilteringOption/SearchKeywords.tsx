@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { keywordResults } from '../../../../api/api';
 
-const SearchKeywords = ({ setKeywordResults }) => {
+const SearchKeywords = ({ setKeywordResults } : any ) => {
    const [searchKeyword, setSearchKeyword] = useState('');
 
    useEffect(() => {

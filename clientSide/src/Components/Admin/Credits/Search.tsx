@@ -1,7 +1,7 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import { useState } from 'react'
 
-const fetchResults = async (value, setResults) => {
+const fetchResults = async (value : any, setResults : any) => {
 	try {
 		if (!value.trim()) {
 			setResults([]);
@@ -31,10 +31,10 @@ const fetchResults = async (value, setResults) => {
 	}
 };
 
-const Search = ({ setResults, selectedPerson, type }) => {
+const Search = ({ setResults, selectedPerson, type } : any) => {
    const [search, setSearch] = useState('');
 
-   const handleChange = (search) => {
+   const handleChange = (search : any) => {
 		if (!selectedPerson) {
          setSearch(search);
          fetchResults(search, setResults);

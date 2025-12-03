@@ -1,6 +1,4 @@
-import React from 'react'
-
-const Credits = ({ data }) => {
+const Credits = ({ data } : any) => {
    console.log(data)
 
    if (data) {
@@ -9,7 +7,7 @@ const Credits = ({ data }) => {
             <div className='w-[32.8125rem] flex flex-col gap-[1rem]'>
                <h2 className='text-[1.4375rem] text-[#9E9E9E] font-bold'>Cast</h2>
                <ul className='flex flex-col gap-[0.5625rem]'>
-                  {data.casts.map((member, index) => {
+                  {data.casts.map((member : any, index : number) => {
                      return (
                         <li key={index} className='flex gap-[1.1875rem]'>
                            <img
@@ -29,11 +27,11 @@ const Credits = ({ data }) => {
                </ul>
             </div>
             <div className='w-[32.8125rem] flex flex-col'>
-               {Object.entries(data.crews).map(([department, members]) => (
+               {Object.entries(data.crews).map(([department, members] : any) => (
                   <div key={department} className='flex flex-col gap-[1rem] pb-[1rem]'>
                      <h2 className='text-[1.4375rem] text-[#9E9E9E] font-bold'>{department}</h2>
                      <ul className='flex flex-col gap-[0.5625rem]'>
-                        {members.map((member, index) => (
+                        {members.map((member : any, index : number) => (
                            <li key={index} className='flex gap-[1.1875rem]'>
                               <img
                                  className='w-[4.125rem] h-[4.125rem] rounded-full object-cover'

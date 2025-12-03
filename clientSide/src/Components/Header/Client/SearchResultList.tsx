@@ -1,18 +1,65 @@
-import React from 'react'
 import SearchResult from './SearchResult';
 
-const SearchResultList = ({ results }) => {
+interface MovieResult {
+  id?: string | number
+  _id?: string | number
+  media_type: 'movie'
+  title?: string
+  original_title?: string
+  release_date?: string
+  overview: string
+  poster_path: string
+}
+
+interface TVResult {
+  id?: string | number
+  _id?: string | number
+  media_type: 'tv'
+  name: string
+  first_air_date?: string
+  overview: string
+  poster_path: string
+}
+
+interface PersonResult {
+  id?: string | number
+  _id?: string | number
+  media_type: 'person'
+  name: string
+  known_for_department: string
+  profile_path: string
+  known_for: Array<{
+    title?: string
+  }>
+}
+
+type SearchResultItem = MovieResult | TVResult | PersonResult
+
+interface SearchResultListProps {
+  results: SearchResultItem[]
+}
+
+interface SearchResultData {
+  id: string | number
+  streamType: string
+  dataOne: string
+  dataTwo: string
+  dataThree: string
+  dataFour: string
+}
+
+const SearchResultList = ({ results }: SearchResultListProps) => {
 
   return (
     <div className='w-full h-auto bg-[#D9D9D9] flex flex-col justify-center text-black rounded-[.125rem] mt-[.3rem] absolute z-[50] dark:bg-[#1C252F]'>
-      {results.map((result, id) => {
-        let searchData = {};
+      {results.map((result, index) => {
+        let searchData: SearchResultData | null = null;
 
         if (result.media_type === "movie") {
           searchData = {
-            id: result.id || result._id,
+            id: result.id || result._id || '',
             streamType: 'movies',
-            dataOne: result.title || result.original_title,
+            dataOne: result.title || result.original_title || '',
             dataTwo: [
               result.media_type,
               result.release_date ? result.release_date.substring(0, 4) : null,
@@ -23,7 +70,7 @@ const SearchResultList = ({ results }) => {
         }
         else if (result.media_type === "tv") {
           searchData = {
-            id: result.id || result._id,
+            id: result.id || result._id || '',
             streamType: 'tv',
             dataOne: result.name,
             dataTwo: [
@@ -36,7 +83,7 @@ const SearchResultList = ({ results }) => {
         }
         else if (result.media_type === "person") {
           searchData = {
-            id: result.id || result._id,
+            id: result.id || result._id || '',
             streamType: 'person',
             dataOne: result.name,
             dataTwo: result.known_for_department,
@@ -49,7 +96,7 @@ const SearchResultList = ({ results }) => {
           }
         }
 
-        return <SearchResult data={searchData} key={id} />
+        return searchData ? <SearchResult data={searchData} key={index} /> : null
       })}
     </div>
   )

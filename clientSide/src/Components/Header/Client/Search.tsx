@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios';
 import { axiosPrivate } from '../../../api/api';
 
-const fetchResults = async (value, setResults) => {
+const fetchResults = async (value : any, setResults : any) => {
 	try {
 		if (!value.trim()) {
 			setResults([]);
@@ -41,10 +41,10 @@ const fetchResults = async (value, setResults) => {
 	}
 };
 
-const Search = ({ setResults }) => {
+const Search = ({ setResults } : any) => {
 	const [search, setSearch] = useState('');
 
-	const handleChange = (search) => {
+	const handleChange = (search : any) => {
 		setSearch(search);
 		fetchResults(search, setResults);
 	}

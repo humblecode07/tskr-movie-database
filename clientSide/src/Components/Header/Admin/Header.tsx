@@ -1,4 +1,3 @@
-import React from 'react'
 import AdminTskr from '../../../assets/Icons/Admin/AdminTskr'
 import SearchBox from './SearchBox'
 import GreenCircle from '../../../assets/Icons/Admin/GreenCircle'
