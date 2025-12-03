@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import ImageIcon from '../../../assets/Icons/Admin/ImageIcon';
 
 const ImageUploadModal = ({
@@ -7,12 +7,12 @@ const ImageUploadModal = ({
   selectedImageType,
   onImageUpload
 } : any) => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] : any = useState(null);
   const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
-  const [error, setError] = useState(null);
+  const [error, setError] : any = useState(null);
 
   // Image size requirements
-  const sizeRequirements = {
+  const sizeRequirements : any = {
     backdrop: {
       minWidth: 1920,
       minHeight: 1080,
@@ -43,7 +43,7 @@ const ImageUploadModal = ({
   }, [isModalOpen]);
 
   // Handle file input change
-  const handleFileChange = (e) => {
+  const handleFileChange = (e : any) => {
     const file = e.target.files[0];
     setSelectedFile(file);
     setError(null);

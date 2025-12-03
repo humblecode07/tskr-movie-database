@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import NowShowing from '../components/Home/Now Showing/NowShowing'
-import FreshPicks from '../components/Home/Fresh Picks/FreshPicks'
+import NowShowing from '../components/Home/NowShowing/NowShowing'
+import FreshPicks from '../components/Home/FreshPicks/FreshPicks'
 import Popular from '../components/Home/Popular/Popular'
 import Upcoming from '../components/Home/Upcoming/Upcoming'
 

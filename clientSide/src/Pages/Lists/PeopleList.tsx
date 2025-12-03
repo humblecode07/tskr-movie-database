@@ -1,13 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import Header from '../../components/Header/Client/Header'
+import { useEffect, useState } from 'react'
 import Marquee from '../../components/ShowsList/Marquee'
 import { peopleList } from '../../api/api';
 import _ from 'lodash'
 import GridView from '../../components/ShowsList/ListManager/ViewDisplay/GridView';
 
+// Define the Person interface based on typical API response
+interface Person {
+   id: number;
+   name: string;
+   profile_path: string | null;
+   known_for_department?: string;
+   popularity?: number;
+   // Add other fields as needed based on your API response
+}
+
 const PeopleList = () => {
-   const [people, setPeople] = useState();
-   const [currentPage, setCurrentPage] = useState(1)
+   const [people, setPeople] = useState<Person[]>([]);
+   const [currentPage, setCurrentPage] : any = useState(1)
 
    useEffect(() => {
       document.title = 'tskr! Movie Database Website';
@@ -21,7 +30,7 @@ const PeopleList = () => {
                }
                else {
                   const existingPeopleIds = new Set(prevPeople.map(person => person.id));
-                  const newPeople = data.results.filter(person => !existingPeopleIds.has(person.id));
+                  const newPeople = data.results.filter((person: Person) => !existingPeopleIds.has(person.id));
                   return [...prevPeople, ...newPeople];
                }
             });
@@ -38,7 +47,7 @@ const PeopleList = () => {
          const documentHeight = document.body.offsetHeight;
 
          if (scrollPosition >= documentHeight) {
-            setCurrentPage(prevPage => prevPage + 1);  // Increase page number
+            setCurrentPage((prevPage : any) => prevPage + 1);  // Increase page number
          }
       }, 500);
 

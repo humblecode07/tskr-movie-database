@@ -1,4 +1,4 @@
-import { createContext, useEffect } from 'react'
+import { createContext, useEffect, Dispatch, SetStateAction } from 'react'
 import Marquee from '../../components/ShowsList/Marquee'
 import FilteringOption from '../../components/ShowsList/ListManager/FilteringOption'
 import DisplayViewOption from '../../components/ShowsList/ListManager/DisplayViewOption'
@@ -7,9 +7,16 @@ import CompactView from '../../components/ShowsList/ListManager/ViewDisplay/Comp
 import GridView from '../../components/ShowsList/ListManager/ViewDisplay/GridView'
 import { useShowsList } from '../../hooks/useShowsList'
 
-export const ContextMovies = createContext(undefined);
+interface ContextMoviesType {
+  streamType: 'movie';
+  filters: any; 
+  handleFilterChange: (filterName: any, value: any) => void;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
+}
 
-const MovieList = () => {
+export const ContextMovies = createContext<ContextMoviesType | undefined>(undefined);
+
+const MovieList: React.FC = () => {
   const { items: movies, filters, handleFilterChange, selectedSortBy, setSelectedSortBy, setCurrentPage, selectedView, setSelectedView } = useShowsList('movie');
 
   useEffect(() => {

@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import DividerTwo from '../../Details/DividerTwo'
 import { fetchMultipleVideosData } from '../../../api/api';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query'; // Assuming you're using react-query
+import { useQuery } from '@tanstack/react-query';
 import YoutubeIcon from '../../../assets/Icons/YoutubeIcon';
 
 const fetchVideoData = async (movieData : any) => {
@@ -34,11 +34,11 @@ const Videos = ({ movieData } : any) => {
       queryFn: () => fetchVideoData(movieData),
    });
 
-   const [selectedType, setSelectedType] = useState(null);
+   const [selectedType, setSelectedType] : any = useState(null);
 
    useEffect(() => {
       if (data) {
-         const initialType = videoType.find(type => data[type]?.length > 0);
+         const initialType : any = videoType.find(type => data[type]?.length > 0);
          setSelectedType(initialType || null);
       }
    }, [data, videoType]);
@@ -54,7 +54,7 @@ const Videos = ({ movieData } : any) => {
    };
 
    const formatDate = (dateString : any) => {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      const options : any = { year: 'numeric', month: 'long', day: 'numeric' };
       const date = new Date(dateString);
       return date.toLocaleDateString('en-US', options);
    };
@@ -74,7 +74,7 @@ const Videos = ({ movieData } : any) => {
          </div>
          <div className='w-full max-h-[50rem] flex gap-[1.5625rem]'>
             <ul className='w-[15.9375rem] h-fit flex flex-col flex-grow-0 gap-[1.1875rem] py-[2.5625rem] px-[1.625rem] rounded-md border-solid border-[#1A1A1A] border-[1px]'>
-               {videoType.map((type) => (
+               {videoType.map((type : any) => (
                   <li
                      key={type}
                      className={`w-[12.6875rem] font-light text-[0.9375rem] flex justify-between cursor-pointer ${selectedType === type ? 'text-blue-500' : ''
@@ -88,7 +88,7 @@ const Videos = ({ movieData } : any) => {
             </ul>
             <div className={`w-[47.9375rem] h-full flex flex-grow-0 flex-wrap gap-[1.7rem] overflow-auto scrollbar-none`}>
                {data?.[selectedType] && data?.[selectedType].length > 0 ? (
-                  data?.[selectedType].map((video, index) => (
+                  data?.[selectedType].map((video : any, index : any) => (
                      <div className='h-fit flex gap-[1.5625rem]' key={index}>
                         <img
                            src={`https://i.ytimg.com/vi/${video.key}/hqdefault.jpg`}

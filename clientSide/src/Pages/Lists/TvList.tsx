@@ -1,5 +1,4 @@
-import React, { createContext, useEffect } from 'react'
-import Header from '../../components/Header/Client/Header'
+import { createContext, useEffect, Dispatch, SetStateAction } from 'react'
 import Marquee from '../../components/ShowsList/Marquee'
 import DisplayViewOption from '../../components/ShowsList/ListManager/DisplayViewOption'
 import FilteringOption from '../../components/ShowsList/ListManager/FilteringOption'
@@ -7,11 +6,17 @@ import SortByOption from '../../components/ShowsList/ListManager/SortByOption'
 import CompactView from '../../components/ShowsList/ListManager/ViewDisplay/CompactView'
 import GridView from '../../components/ShowsList/ListManager/ViewDisplay/GridView'
 import { useShowsList } from '../../hooks/useShowsList'
-import Footer from '../../components/Footer/Footer'
 
-export const ContextTvShows = createContext(undefined);
+interface ContextTvShowsType {
+   streamType: 'tv';
+   filters: any;
+   handleFilterChange: (filterName: any, value: any) => void;
+   setCurrentPage: Dispatch<SetStateAction<number>>;
+}
 
-const TvList = () => {
+export const ContextTvShows = createContext<ContextTvShowsType | undefined>(undefined);
+
+const TvList: React.FC = () => {
    const { items: tvShows, filters, handleFilterChange, selectedSortBy, setSelectedSortBy, setCurrentPage, selectedView, setSelectedView } = useShowsList('tv');
 
    useEffect(() => {

@@ -142,6 +142,7 @@ const Images: React.FC<ImagesProps> = ({ movieData, setMovieData }) => {
   };
 
   const deleteImage = async (image: Image): Promise<void> => {
+    console.log(image);
     alert('This function is not available yet!')
   };
 
