@@ -4,16 +4,20 @@ import { appendVideosApi, fetchMultipleVideosData, getMyMovieDataApi } from '../
 import Section from '../../components/Details/Section';
 import Videos from '../../components/Details/Videos';
 
-// Type definitions
 interface Video {
   key: string;
   type: string;
+  youtubeData?: YouTubeData;
   [key: string]: any;
 }
 
-interface YoutubeData {
+interface YouTubeData {
   id: string;
   [key: string]: any;
+}
+
+interface VideoTypeGroup {
+  [type: string]: Video[];
 }
 
 interface SectionData {
@@ -23,30 +27,22 @@ interface SectionData {
   release_date: string;
 }
 
-interface VideoTypeGroup {
-  [type: string]: Array<Video & { youtubeData: YoutubeData }>;
-}
-
 interface VideosState {
   id: string | number;
   section: SectionData;
   videos: VideoTypeGroup;
 }
 
-const isMongoDBId = (id: string): boolean => {
-  return typeof id === 'string' && id.length === 24;
-};
+const isMongoDBId = (id: string): boolean => typeof id === 'string' && id.length === 24;
 
-const MovieVideos = () => {
+const MovieVideos: React.FC = () => {
   const params = useParams<{ movieId: string }>();
   const [videos, setVideos] = useState<VideosState | undefined>();
 
   useEffect(() => {
-    const fetchVideoData = async () => {
+    const fetchVideoData = async (): Promise<void> => {
       try {
-        if (!params.movieId) return;
-
-        const movieId = params.movieId.split('-')[0];
+        const movieId = params.movieId!.split('-')[0];
         let response: any;
 
         if (isMongoDBId(movieId)) {
@@ -54,15 +50,15 @@ const MovieVideos = () => {
 
           console.log(response);
 
-          const videoKeys = response.movie.videos.map((video: Video) => video.key);
+          const videoKeys: string[] = response.movie.videos.map((video: Video) => video.key);
           console.log(videoKeys);
-          const youtubeDataArray = await fetchMultipleVideosData(videoKeys);
-          const youtubeDataMap = youtubeDataArray.reduce((acc: Record<string, YoutubeData>, youtubeData: YoutubeData) => {
+          const youtubeDataArray: YouTubeData[] = await fetchMultipleVideosData(videoKeys);
+          const youtubeDataMap: Record<string, YouTubeData> = youtubeDataArray.reduce((acc, youtubeData) => {
             acc[youtubeData.id] = youtubeData;
             return acc;
-          }, {});
+          }, {} as Record<string, YouTubeData>);
 
-          const videoTypeGroup = response.movie.videos.reduce((acc: VideoTypeGroup, video: Video) => {
+          const videoTypeGroup: VideoTypeGroup = response.movie.videos.reduce((acc: VideoTypeGroup, video: Video) => {
             if (!acc[video.type]) acc[video.type] = [];
 
             acc[video.type].push({ ...video, youtubeData: youtubeDataMap[video.key] });
@@ -85,14 +81,14 @@ const MovieVideos = () => {
 
           // This code maps through the response data and fetches additional details from the YouTube API for each video, merging that information into the existing video data structure.
 
-          const videoKeys = response.videos.results.map((video: Video) => video.key);
-          const youtubeDataArray = await fetchMultipleVideosData(videoKeys);
-          const youtubeDataMap = youtubeDataArray.reduce((acc: Record<string, YoutubeData>, youtubeData: YoutubeData) => {
+          const videoKeys: string[] = response.videos.results.map((video: Video) => video.key);
+          const youtubeDataArray: YouTubeData[] = await fetchMultipleVideosData(videoKeys);
+          const youtubeDataMap: Record<string, YouTubeData> = youtubeDataArray.reduce((acc, youtubeData) => {
             acc[youtubeData.id] = youtubeData;
             return acc;
-          }, {});
+          }, {} as Record<string, YouTubeData>);
 
-          const videoTypeGroup = response.videos.results.reduce((acc: VideoTypeGroup, video: Video) => {
+          const videoTypeGroup: VideoTypeGroup = response.videos.results.reduce((acc: VideoTypeGroup, video: Video) => {
             if (!acc[video.type]) acc[video.type] = [];
 
             acc[video.type].push({ ...video, youtubeData: youtubeDataMap[video.key] });
@@ -135,4 +131,4 @@ const MovieVideos = () => {
   return null;
 }
 
-export default MovieVideos
+export default MovieVideos;
