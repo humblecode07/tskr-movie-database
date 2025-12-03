@@ -1,5 +1,3 @@
-import React from 'react'
-
 const ViewIcon = () => {
    return (
       <svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg">
