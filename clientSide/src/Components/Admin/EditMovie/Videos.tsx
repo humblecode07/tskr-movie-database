@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import AddIcon from '../../../assets/Icons/Admin/AddIcon';
 import VideoUploadModal from '../Modals/VideoUploadModal';
 import { addVideo, fetchMultipleVideosData } from '../../../api/api';
@@ -6,11 +6,11 @@ import { useParams } from 'react-router-dom';
 import EditIcon from '../../../assets/Icons/Admin/EditIcon';
 import DeleteIconWhite from '../../../assets/Icons/Admin/DeleteIconWhite';
 
-const Videos = ({ movieData, setMovieData }) => {
-  const [videos, setVideos] = useState();
+const Videos = ({ movieData, setMovieData } : any) => {
+  const [videos, setVideos] : any = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [videoDetails, setVideoDetails] = useState({
+  const [videoDetails, setVideoDetails] : any = useState({
     key: '',
     site: 'Youtube',
     size: 1080,
@@ -21,16 +21,16 @@ const Videos = ({ movieData, setMovieData }) => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const { movieId } = useParams();
+  const { movieId } : any = useParams();
 
   const handleVideoDetailUpload = async () => {
     try {
       await addVideo(movieId, videoDetails)
 
-      setMovieData((prevData) => ({
+      setMovieData((prevData : any) => ({
         ...prevData,
         videos: [
-          ...(prevData.videos || []).filter((video) => video.key !== videoDetails.key),
+          ...(prevData.videos || []).filter((video : any) => video.key !== videoDetails.key),
           videoDetails,
         ],
       }));
@@ -55,7 +55,7 @@ const Videos = ({ movieData, setMovieData }) => {
   useEffect(() => {
     const fetchVideoData = async () => {
       try {
-        const videoKeys = movieData.videos.map(video => video.key);
+        const videoKeys = movieData.videos.map((video : any) => video.key);
 
         const youtubeDataArray = await fetchMultipleVideosData(videoKeys);
 
@@ -64,7 +64,7 @@ const Videos = ({ movieData, setMovieData }) => {
           return acc;
         }, {});
 
-        const videoTypeGroup = movieData.videos.reduce((acc, video) => {
+        const videoTypeGroup = movieData.videos.reduce((acc : any, video : any) => {
           if (!acc[video.type]) acc[video.type] = [];
 
           acc[video.type].push({ ...video, youtubeData: youtubeDataMap[video.key] });
@@ -104,8 +104,8 @@ const Videos = ({ movieData, setMovieData }) => {
             </tr>
           </thead>
           <tbody>
-            {Object.entries(videos || {}).map(([type, typeVideos]) => (
-              typeVideos.map((video, index) => (
+            {Object.entries(videos || {}).map(([type, typeVideos] : any) => (
+              typeVideos.map((video : any, index : any) => (
                 <tr key={index} className="border-b border-[#444444] hover:bg-[#222222]">
                   <td className="px-4 py-2">{type}</td>
                   <td className="px-4 py-2">{video.size}p</td>

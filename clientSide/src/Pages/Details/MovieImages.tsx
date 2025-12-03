@@ -1,112 +1,134 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { appendImagesApi, getMyMovieDataApi, imagesApi, languages } from '../../api/api';
+import { useParams } from 'react-router-dom';
+import { appendVideosApi, fetchMultipleVideosData, getMyMovieDataApi } from '../../api/api';
 import Section from '../../components/Details/Section';
-import Medias from '../../components/Details/Medias';
+import Videos from '../../components/Details/Videos';
 
-const isMongoDBId = (id) => typeof id === 'string' && id.length === 24;
+interface Video {
+  key: string;
+  type: string;
+  youtubeData?: YouTubeData;
+  [key: string]: any;
+}
 
-const MovieImages = () => {
-  const params = useParams();
-  const [medias, setMedias] = useState();
+interface YouTubeData {
+  id: string;
+  [key: string]: any;
+}
+
+interface VideoTypeGroup {
+  [type: string]: Video[];
+}
+
+interface SectionData {
+  section_title: string;
+  backdrop_path: string;
+  title: string | null;
+  release_date: string;
+}
+
+interface VideosState {
+  id: string | number;
+  section: SectionData;
+  videos: VideoTypeGroup;
+}
+
+const isMongoDBId = (id: string): boolean => typeof id === 'string' && id.length === 24;
+
+const MovieVideos: React.FC = () => {
+  const params = useParams<{ movieId: string }>();
+  const [videos, setVideos] = useState<VideosState | undefined>();
 
   useEffect(() => {
-    const fetchMediaData = async () => {
+    const fetchVideoData = async (): Promise<void> => {
       try {
-        const movieId = params.movieId.split('-')[0];
-        let response; // Top Level API
-        let responseTwo; // Image API
-        let responseThree; // Language API
+        const movieId = params.movieId!.split('-')[0];
+        let response: any;
 
-        if (['backdrops', 'posters', 'logos'].includes(params.mediaType)) {
-          if (isMongoDBId(movieId)) {
-            [response, responseTwo] = await Promise.all([
-              getMyMovieDataApi('movie', movieId),
-              languages()
-            ]);
+        if (isMongoDBId(movieId)) {
+          response = await getMyMovieDataApi('movie', movieId);
 
-            const languageMap = responseTwo.reduce((acc, lang) => {
-              acc[lang.iso_639_1] = lang.english_name || lang.name;
-              return acc;
-            }, {});
+          console.log(response);
 
-            console.log(response);
-            console.log(response.movie.images[params.mediaType]);
-            
-            const groupedImagesByLang = response.movie.images[params.mediaType].reduce((acc, lang) => {
-              const langKey = languageMap[lang.iso_639_1] || lang.iso_639_1 || 'No Language';
-              if (!acc[langKey]) {
-                acc[langKey] = [];
-              }
-              acc[langKey].push(lang);
-              return acc;
-            }, {});
+          const videoKeys: string[] = response.movie.videos.map((video: Video) => video.key);
+          console.log(videoKeys);
+          const youtubeDataArray: YouTubeData[] = await fetchMultipleVideosData(videoKeys);
+          const youtubeDataMap: Record<string, YouTubeData> = youtubeDataArray.reduce((acc, youtubeData) => {
+            acc[youtubeData.id] = youtubeData;
+            return acc;
+          }, {} as Record<string, YouTubeData>);
 
-            console.log(groupedImagesByLang);
+          const videoTypeGroup: VideoTypeGroup = response.movie.videos.reduce((acc: VideoTypeGroup, video: Video) => {
+            if (!acc[video.type]) acc[video.type] = [];
 
-            setMedias({
-              id: response.movie._id,
-              section: {
-                section_title: params.mediaType.charAt(0).toUpperCase() + params.mediaType.slice(1),
-                backdrop_path: response.movie.backdrop_path,
-                title: response.movie.title || null,
-                release_date: response.movie.release_date.split('-')[0],
-              },
-              media: groupedImagesByLang
-            });
-          }
-          else {
-            [response, responseTwo, responseThree] = await Promise.all([
-              appendImagesApi('movie', movieId),
-              imagesApi('movie', movieId),
-              languages()
-            ]);
+            acc[video.type].push({ ...video, youtubeData: youtubeDataMap[video.key] });
+            return acc;
+          }, {} as VideoTypeGroup);
 
-            const languageMap = responseThree.reduce((acc, lang) => {
-              acc[lang.iso_639_1] = lang.english_name || lang.name;
-              return acc;
-            }, {});
+          setVideos({
+            id: response.id,
+            section: {
+              section_title: 'Videos',
+              backdrop_path: response.movie.backdrop_path,
+              title: response.movie.title || null,
+              release_date: response.movie.release_date.split('-')[0],
+            },
+            videos: videoTypeGroup
+          })
+        }
+        else {
+          response = await appendVideosApi('movie', movieId);
 
-            const groupedImagesByLang = responseTwo[params.mediaType].reduce((acc, lang) => {
-              const langKey = languageMap[lang.iso_639_1] || lang.iso_639_1 || 'No Language';
-              if (!acc[langKey]) {
-                acc[langKey] = [];
-              }
-              acc[langKey].push(lang);
-              return acc;
-            }, {});
+          // This code maps through the response data and fetches additional details from the YouTube API for each video, merging that information into the existing video data structure.
 
-            setMedias({
-              id: response.id,
-              section: {
-                section_title: params.mediaType.charAt(0).toUpperCase() + params.mediaType.slice(1),
-                backdrop_path: response.backdrop_path,
-                title: response.title || null,
-                release_date: response.release_date.split('-')[0],
-              },
-              media: groupedImagesByLang
-            });
-          }
+          const videoKeys: string[] = response.videos.results.map((video: Video) => video.key);
+          const youtubeDataArray: YouTubeData[] = await fetchMultipleVideosData(videoKeys);
+          const youtubeDataMap: Record<string, YouTubeData> = youtubeDataArray.reduce((acc, youtubeData) => {
+            acc[youtubeData.id] = youtubeData;
+            return acc;
+          }, {} as Record<string, YouTubeData>);
+
+          const videoTypeGroup: VideoTypeGroup = response.videos.results.reduce((acc: VideoTypeGroup, video: Video) => {
+            if (!acc[video.type]) acc[video.type] = [];
+
+            acc[video.type].push({ ...video, youtubeData: youtubeDataMap[video.key] });
+            return acc;
+          }, {} as VideoTypeGroup);
+
+          console.log(videoTypeGroup)
+
+          setVideos({
+            id: response.id,
+            section: {
+              section_title: 'Videos',
+              backdrop_path: response.backdrop_path,
+              title: response.title || null,
+              release_date: response.release_date.split('-')[0],
+            },
+            videos: videoTypeGroup
+          })
         }
       }
       catch (error) {
         console.error("Error fetching media data:", error);
       }
-    };
+    }
 
-    fetchMediaData();
-  }, [params]);
+    fetchVideoData();
+  }, [params])
 
-  if (medias) {
+  if (videos) {
     return (
       <>
         <main className='text-white flex flex-col gap-0 font-roboto p-0'>
-          <Section data={medias.section} />
-          <Medias data={medias.media} />
+          <Section data={videos.section} />
+          <Videos data={videos.videos} />
         </main>
       </>
     )
   }
+
+  return null;
 }
 
-export default MovieImages
+export default MovieVideos;

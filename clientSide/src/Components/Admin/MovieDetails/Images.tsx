@@ -7,12 +7,12 @@ import DividerTwo from '../../Details/DividerTwo';
 const fetchImageData = async (movieData : any, mediaType : any) => {
    const response = await languages();
 
-   const languageMap = response.reduce((acc, lang) => {
+   const languageMap = response.reduce((acc : any, lang : any) => {
       acc[lang.iso_639_1] = lang.english_name || lang.name;
       return acc;
    }, {});
 
-   const groupedImagesByLang = movieData.images[mediaType].reduce((acc, lang) => {
+   const groupedImagesByLang = movieData.images[mediaType].reduce((acc : any, lang : any) => {
       const langKey = languageMap[lang.iso_639_1] || lang.iso_639_1 || 'No Language';
       if (!acc[langKey]) {
          acc[langKey] = [];
@@ -29,7 +29,7 @@ const fetchImageData = async (movieData : any, mediaType : any) => {
 const Images = ({ movieData } : any) => {
    const { movieId } = useParams();
    const [selectedImageType, setSelectedImageType] = useState('posters');
-   const [selectedLang, setSelectedLang] = useState(null);
+   const [selectedLang, setSelectedLang] : any = useState(null);
 
    const { data, error, isLoading } = useQuery({
       queryKey: ['movieData', movieId, selectedImageType],
@@ -46,7 +46,7 @@ const Images = ({ movieData } : any) => {
    if (isLoading) return <div>Loading...</div>;
    if (error) return <div>Error fetching data: {error.message}</div>;
 
-   const mediaDimensions = {
+   const mediaDimensions : any = {
       logos: {
          width: 'w-[23.4375rem]',
          height: 'h-[13.5rem]',
@@ -105,7 +105,7 @@ const Images = ({ movieData } : any) => {
             </ul>
             <div className={`w-full h-full flex flex-grow-0 flex-wrap gap-[1.0625rem] overflow-auto scrollbar-none`}>
                {selectedLang && media[selectedLang]?.length > 0 ? (
-                  media[selectedLang].map((image, index) => (
+                  media[selectedLang].map((image : any, index : any) => (
                      <img
                         key={index}
                         src={`http://localhost:3000/images/${image.file_path}`}

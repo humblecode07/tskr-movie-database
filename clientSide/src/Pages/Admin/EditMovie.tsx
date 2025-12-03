@@ -15,15 +15,28 @@ import { useParams } from 'react-router-dom';
 import { getMyMovieDataApi } from '../../api/api';
 import Images from '../../components/Admin/EditMovie/Images';
 
-const EditMovie = () => {
+
+interface MovieData {
+   title?: string;
+   original_title?: string;
+   images: Images; // Replace 'any' with the specific image type if available
+   [key: string]: any;
+}
+
+interface TabContent {
+   name: string;
+   component: JSX.Element;
+}
+
+const EditMovie: React.FC = () => {
    const scrollRef = useHorizontalScroll();
-   const [selectedTab, setSelectedTab] = useState('Primary Details');
-   const [activeIndex, setActiveIndex] = useState(0);
+   const [selectedTab, setSelectedTab] = useState<string>('Primary Details');
+   const [activeIndex, setActiveIndex] = useState<number>(0);
 
-   const { movieId } = useParams();
-   const [movieData, setMovieData] = useState({});
+   const { movieId } = useParams<{ movieId: string }>();
+   const [movieData, setMovieData] = useState<MovieData>({} as MovieData);
 
-   const tabContent = [
+   const tabContent: TabContent[] = [
       { name: 'Primary Details', component: <PrimaryDetails movieData={movieData} setMovieData={setMovieData} /> },
       // { name: 'Alternative Titles', component: <AlternativeTitles movieData={movieData} setMovieData={setMovieData} /> },
       { name: 'Cast', component: <Cast movieData={movieData} setMovieData={setMovieData} /> },
@@ -38,13 +51,15 @@ const EditMovie = () => {
       { name: 'Videos', component: <Videos movieData={movieData} setMovieData={setMovieData} /> },
    ];
 
-   const handleTabClick = (tab : any, index : number) => {
+   const handleTabClick = (tab: TabContent, index: number): void => {
       setActiveIndex(index);
       setSelectedTab(tab.name);
    };
 
    useEffect(() => {
-      const fetchCountryList = async () => {
+      const fetchCountryList = async (): Promise<void> => {
+         if (!movieId) return;
+
          try {
             const movieDataResponse = await getMyMovieDataApi('movie', movieId);
 

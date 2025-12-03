@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import AddIcon from '../../../assets/Icons/Admin/AddIcon'
 import { useParams } from 'react-router-dom';
 import AddTaglineModal from '../Modals/AddTaglineModal';
@@ -6,22 +6,22 @@ import { addTagline, deleteTagline } from '../../../api/api';
 import DeleteIconWhite from '../../../assets/Icons/Admin/DeleteIconWhite';
 import EditIcon from '../../../assets/Icons/Admin/EditIcon';
 
-const Taglines = ({ movieData, setMovieData }) => {
-  const taglines = movieData.taglines;
-  const [tagline, setTagline] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const Taglines = ({ movieData, setMovieData } : any) => {
+  const taglines : any = movieData.taglines;
+  const [tagline, setTagline] : any = useState('');
+  const [isModalOpen, setIsModalOpen] : any = useState(false);
 
   const toggleAddTaglineModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const { movieId } = useParams();
+  const { movieId } : any = useParams();
 
   const handleAddTagline = async () => {
     try {
-      await addTagline(movieId, { tagline: tagline })
+      await addTagline(movieId, { taglines: tagline })
 
-      setMovieData((prevData) => ({
+      setMovieData((prevData : any) => ({
         ...prevData,
         taglines: [...prevData.taglines, tagline]
       }));
@@ -34,16 +34,16 @@ const Taglines = ({ movieData, setMovieData }) => {
     }
   }
 
-  const handleDeleteTagline = async (selectedTagline) => {
+  const handleDeleteTagline = async (selectedTagline : any) => {
     const confirmDeletion = window.confirm(`Are you sure you want to remove the genre "${selectedTagline}"?`);
 
     if (confirmDeletion) {
       try {
         await deleteTagline(movieId, selectedTagline);
 
-        setMovieData((prevData) => ({
+        setMovieData((prevData : any) => ({
           ...prevData,
-          taglines: prevData.taglines.filter((t) => t !== selectedTagline)
+          taglines: prevData.taglines.filter((t : any) => t !== selectedTagline)
         }));
 
         alert(`Tagline "${selectedTagline}" has been removed successfully!`);
@@ -75,7 +75,7 @@ const Taglines = ({ movieData, setMovieData }) => {
             </tr>
           </thead>
           <tbody>
-            {taglines?.map((tagline, index) => (
+            {taglines?.map((tagline : any, index : any) => (
               <tr
                 key={index}
                 className="border-b border-[#444444] hover:bg-[#222222] flex justify-between"

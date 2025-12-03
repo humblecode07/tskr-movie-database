@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { registerUser } from '../api/api';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Marquees from './Marquees';
@@ -6,26 +6,42 @@ import KeyIcon from '../assets/Icons/KeyIcon';
 import EmailIcon from '../assets/Icons/EmailIcon';
 import UserIcon from '../assets/Icons/UserIcon';
 
+interface UserDetails {
+  full_name: string;
+  email: string;
+  password: string;
+}
+
+
 const Register = () => {
   const navigate = useNavigate();
-  const [userDetails, setUserDetails] = useState({
+  const [userDetails, setUserDetails] = useState<UserDetails>({
     full_name: '',
     email: '',
     password: '',
   });
 
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string>('');
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserDetails({ ...userDetails, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      await registerUser(userDetails);
+      // Option 1: If registerUser expects FormData, convert the object
+      const formData = new FormData();
+      formData.append('full_name', userDetails.full_name);
+      formData.append('email', userDetails.email);
+      formData.append('password', userDetails.password);
+      await registerUser(formData);
+
+      // Option 2: If registerUser can accept a plain object, use this instead:
+      // await registerUser(userDetails);
+
       alert('Account created!');
       navigate('/signin');
     } catch (error) {
@@ -33,6 +49,8 @@ const Register = () => {
       setError('Registration failed. Please try again.');
     }
   };
+
+  console.log(error);
 
   return (
     <main className="min-h-[41.25rem] text-black flex flex-col gap-0 p-0">

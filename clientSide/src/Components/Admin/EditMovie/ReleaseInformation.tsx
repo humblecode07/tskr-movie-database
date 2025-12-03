@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import AddIcon from '../../../assets/Icons/Admin/AddIcon'
 import AddReleaseDateModal from '../Modals/AddReleaseDateModal';
 import { addReleaseDate } from '../../../api/api';
@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import EditIcon from '../../../assets/Icons/Admin/EditIcon';
 import DeleteIconWhite from '../../../assets/Icons/Admin/DeleteIconWhite';
 
-const ReleaseInformation = ({ movieData, setMovieData }) => {
+const ReleaseInformation = ({ movieData, setMovieData } : any) => {
   const releaseDates = movieData.release_dates?.results;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -14,13 +14,11 @@ const ReleaseInformation = ({ movieData, setMovieData }) => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const { movieId } = useParams();
+  const { movieId } : any = useParams();
 
-
-
-  const handleAddReleaseDate = async (data) => {
+  const handleAddReleaseDate = async (data : any) => {
     try {
-      const releaseDateData = {
+      const releaseDateData : any = {
         country: data.country.name,
         language: data.language,
         descriptors: [],
@@ -32,7 +30,7 @@ const ReleaseInformation = ({ movieData, setMovieData }) => {
 
       await addReleaseDate(movieId, releaseDateData);
 
-      setMovieData((prevData) => {
+      setMovieData((prevData : any) => {
         // Create a copy of the existing release_dates
         const updatedReleaseDates = prevData.release_dates ? [...prevData.release_dates.results] : [];
 
@@ -125,8 +123,8 @@ const ReleaseInformation = ({ movieData, setMovieData }) => {
             </tr>
           </thead>
           <tbody>
-            {releaseDates?.map((releaseCountry, countryIndex) => (
-              releaseCountry.release_dates.map((releaseDate, dateIndex) => (
+            {releaseDates?.map((releaseCountry : any, countryIndex : any) => (
+              releaseCountry.release_dates.map((releaseDate : any, dateIndex : any) => (
                 <tr
                   key={`${countryIndex}-${dateIndex}`}
                   className="border-b border-[#444444] hover:bg-[#222222]"

@@ -1,4 +1,3 @@
-import React from 'react'
 import StarLIcon from '../../assets/Icons/StarLIcon'
 import StarOutlineLIcon from '../../assets/Icons/StarOutlineLIcon'
 import HeartIcon from '../../assets/Icons/HeartIcon'
@@ -6,7 +5,7 @@ import WatchListSIcon from '../../assets/Icons/WatchListSIcon'
 import Divider from './Divider'
 import { FacebookIcon, HomepageIcon, IMDbIcon, InstagramIcon, TwitterIcon, WikiDataIcon } from '../../assets/Icons/LinkIcons'
 
-const Overview = ({ data }) => {
+const Overview = ({ data } : any) => {
   console.log(data)
 
   if (data) {
@@ -19,7 +18,7 @@ const Overview = ({ data }) => {
               <span className='border border-white border-solid px-[5px] py-[2px]'>{data.certifications || "NR"}</span>
               <span>{data.release_date ? data.release_date : "No Date Given"}</span>
               <div>
-                {data.genres.map((genre, index) => (
+                {data.genres.map((genre : any, index : any) => (
                   <span key={index}>
                     {genre}{index < data.genres.length - 1 && ", "}
                   </span>
@@ -64,7 +63,7 @@ const Overview = ({ data }) => {
           <span className='font-bold'>Available to Stream</span>
           <div className='flex gap-[1.4375rem] flex-wrap'>
             {data.watch_providers && data.watch_providers.length > 0 ? (
-              data.watch_providers.map((provider) => {
+              data.watch_providers.map((provider : any) => {
                 return (
                   <a key={provider.provider_id}>
                     <img
@@ -106,7 +105,7 @@ const Overview = ({ data }) => {
                 <span className='font-bold'>Writers</span>
                 <div className='flex gap-[.875rem]'>
                   {data.writers && data.writers.length > 0 ? (
-                    data.writers.map((writer, index) => (
+                    data.writers.map((writer : any, index : any) => (
                       <>
                         <span key={index} className='flex items-center'>
                           <a className='text-[#4397FA]'>{writer}</a>
@@ -128,7 +127,7 @@ const Overview = ({ data }) => {
                 <span className='font-bold'>Created By</span>
                 <div className='flex gap-[.875rem]'>
                   {data.created_by && data.created_by.length > 0
-                    ? data.created_by.map((creator, index) => (
+                    ? data.created_by.map((creator : any, index : any) => (
                       <>
                         <span key={index} className='flex items-center'>
                           <a className='text-[#4397FA]'>{creator}</a>
@@ -148,7 +147,7 @@ const Overview = ({ data }) => {
               <span className='font-bold'>Stars</span>
               <div className='flex flex-wrap gap-[.875rem]'>
                 {data.stars && data.stars.length > 0
-                  ? data.stars.map((star, index) => (
+                  ? data.stars.map((star : any, index : any) => (
                     <>
                       <span key={index} className='flex items-center'>
                         <a className='text-[#4397FA] text-wrap'>{star}</a>

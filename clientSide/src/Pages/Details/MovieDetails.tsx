@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { dataApi, getMyMovieDataApi, imagesApi } from '../../api/api';
@@ -9,28 +8,172 @@ import Media from '../../components/Details/OverviewMedia';
 import Recommendation from '../../components/Details/Recommendation';
 import { LOCALHOST } from '../../App';
 
+interface Video {
+  key: string;
+  name: string;
+  type: string;
+  site: string;
+}
+
+interface Image {
+  file_path: string;
+}
+
+interface Genre {
+  id: number;
+  name: string;
+}
+
+interface CrewMember {
+  id: number;
+  name: string;
+  job: string;
+  department: string;
+}
+
+interface CastMember {
+  id: number;
+  name: string;
+  character: string;
+  profile_path: string | null;
+}
+
+interface ReleaseDate {
+  certification: string;
+  iso_639_1: string;
+  release_date: string;
+  type: number;
+}
+
+interface ReleaseDateResult {
+  iso_3166_1: string;
+  release_dates: ReleaseDate[];
+}
+
+interface ExternalIds {
+  facebook_id?: string;
+  twitter_id?: string;
+  instagram_id?: string;
+  wikidata_id?: string;
+  imdb_id?: string;
+}
+
+interface MovieData {
+  id: number;
+  title: string;
+  poster_path: string | null;
+  backdrop_path?: string | null;
+  backdrops?: Image[];
+  posters?: Image[];
+  logos?: Image[];
+  images: {
+    backdrops: Image[];
+    posters: Image[];
+    logos: Image[];
+  };
+  videos: {
+    results?: Video[];
+  } | Video[];
+  release_date: string;
+  genres: Genre[];
+  vote_average: number;
+  vote_count: number;
+  tagline: string;
+  overview: string;
+  original_language: string;
+  original_title: string;
+  status: string;
+  runtime: number;
+  budget: number;
+  revenue: number;
+  homepage: string;
+  origin_country: string[];
+  release_dates: {
+    results: ReleaseDateResult[];
+  };
+  credits: {
+    cast: CastMember[];
+    crew: CrewMember[];
+  };
+  external_ids: ExternalIds;
+  recommendations: unknown;
+}
+
+interface ShowCollageData {
+  title: string;
+  poster_path: string | null;
+  backdrop: string | null;
+  backdrop_count: string;
+  poster: string | null;
+  poster_count: string;
+  video: string | null;
+  video_count: string;
+  official_trailer: string | null;
+}
+
+interface OverviewData {
+  type: 'movie';
+  title: string;
+  certifications?: string;
+  release_date: string;
+  genres: string[];
+  vote_average: string;
+  vote_count: string;
+  tagline: string;
+  overview: string;
+  original_language: string;
+  original_title: string;
+  director?: string;
+  writers?: string[];
+  stars: string[];
+  status: string;
+  runtime: string;
+  facebook_id?: string;
+  twitter_id?: string;
+  instagram_id?: string;
+  wikidata?: string;
+  imdb_id?: string;
+  homepage: string;
+  budget: string;
+  revenue: string;
+}
+
+interface Credits {
+  type: 'movie';
+  casts?: CastMember[];
+  director?: CrewMember;
+  writers?: string[];
+}
+
+interface Medias {
+  videos?: Video[];
+  posters?: Image[];
+  backdrops?: Image[];
+  logos?: Image[];
+}
+
+interface Recommendations {
+  recommendations: unknown;
+}
+
 // Check if it's an ID from MongoDB
-const isMongoDBId = (id) => typeof id === 'string' && id.length === 24;
+const isMongoDBId = (id: string): boolean => typeof id === 'string' && id.length === 24;
 
 // Fetch Movie Data
-const fetchMovieData = async (movieId) => {
-
+const fetchMovieData = async (movieId: string): Promise<MovieData> => {
   if (isMongoDBId(movieId)) {
     const myResponse = await getMyMovieDataApi('movie', movieId);
-
     return { ...myResponse.movie };
-  }
-  else {
+  } else {
     const response = await dataApi('movie', movieId);
     const responseImage = await imagesApi('movie', movieId);
-
-    return { ...response, ...responseImage };
+    return { ...response, ...responseImage } as MovieData;
   }
 };
 
-const MovieDetails = () => {
-  const { movieId } = useParams();
-  const id = movieId.split('-')[0]; // Get the ID portion before the dash
+const MovieDetails: React.FC = () => {
+  const { movieId } = useParams<{ movieId: string }>();
+  const id = movieId!.split('-')[0]; // Get the ID portion before the dash
 
   // Using React Query to fetch data
   const { data, error, isLoading } = useQuery({
@@ -41,7 +184,7 @@ const MovieDetails = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data: {error.message}</div>;
 
-  const response = data;
+  const response = data!;
 
   console.log(response);
 
@@ -49,31 +192,25 @@ const MovieDetails = () => {
   document.title = response.title;
 
   // Gets the official trailer first, if not found, try to get a relevant trailer
-  const officialTrailer = (response.videos.results && response.videos.results.length > 0)
-    ? response.videos.results.filter(
+  const videosArray = Array.isArray(response.videos)
+    ? response.videos
+    : response.videos.results || [];
+
+  const officialTrailer = videosArray.length > 0
+    ? videosArray.filter(
       video => video.name.toLowerCase().includes('official') && video.name.toLowerCase().includes('trailer')
     )
-    : (!response.videos['results'] ? response.videos.filter(
-      video => video.name.toLowerCase().includes('official') && video.name.toLowerCase().includes('trailer')
-    ) : 0); // this is still can have an issue, will fix later ig
+    : [];
 
-  const trailer = officialTrailer.length > 0
+  const trailer: string | null = officialTrailer.length > 0
     ? `https://www.youtube.com/embed/${officialTrailer[0].key}?si=8l7P2cs2GNCdH2-L`
-    : response.videos?.results
-      ? (() => {
-        const foundVideo = response.videos.results.find(video => video.type === 'Trailer' && video.site === 'Youtube');
-        return foundVideo ? `https://www.youtube.com/embed/${foundVideo.key}?si=8l7P2cs2GNCdH2-L` : null;
-      })()
-      : response.videos
-        ? (() => {
-          const foundVideo = response.videos.find(video => video.type === 'Trailer' && video.site === 'Youtube');
-          return foundVideo ? `https://www.youtube.com/embed/${foundVideo.key}?si=8l7P2cs2GNCdH2-L` : null;
-        })()
-        : null;
-
+    : (() => {
+      const foundVideo = videosArray.find(video => video.type === 'Trailer' && video.site === 'Youtube');
+      return foundVideo ? `https://www.youtube.com/embed/${foundVideo.key}?si=8l7P2cs2GNCdH2-L` : null;
+    })();
 
   // Helper functions
-  const generateCountMessage = (count, singularLabel, pluralLabel) => {
+  const generateCountMessage = (count: number, singularLabel: string, pluralLabel: string): string => {
     if (count > 99) {
       return `99+ ${pluralLabel}`;
     } else if (count > 1) {
@@ -85,7 +222,7 @@ const MovieDetails = () => {
     }
   };
 
-  const getRandomIndex = (count) => {
+  const getRandomIndex = (count: number): number => {
     return Math.floor(Math.random() * count);
   };
 
@@ -95,7 +232,7 @@ const MovieDetails = () => {
   const posterCount = response.posters?.length || response.images.posters?.length || 0;
   const posterMessage = generateCountMessage(posterCount, 'POSTER', 'POSTERS');
 
-  const videosCount = response.videos.results?.length || response.videos?.length || 0;
+  const videosCount = videosArray.length || 0;
   const videoMessage = generateCountMessage(videosCount, 'VIDEO', 'VIDEOS');
 
   // Gets random index based on the total count of data
@@ -105,19 +242,24 @@ const MovieDetails = () => {
 
   console.log(posterCount);
 
-  const showCollageData = {
+  const showCollageData: ShowCollageData = {
     title: response.title,
-    poster_path: response.poster_path ? response.poster_path : null,
+    poster_path: response.poster_path || null,
     backdrop: randomBackdropIndex !== null
-      ? (response.backdrops ? response.backdrops[randomBackdropIndex].file_path : response.images.backdrops[randomBackdropIndex].file_path)
+      ? (response.backdrops
+        ? response.backdrops[randomBackdropIndex].file_path
+        : response.images.backdrops[randomBackdropIndex].file_path)
       : null,
     backdrop_count: backdropMessage,
     poster: randomPosterIndex !== null
-      ? (response.posters ? response.posters[randomPosterIndex].file_path : response.images.posters[randomPosterIndex].file_path)
+      ? (response.posters
+        ? response.posters[randomPosterIndex].file_path
+        : response.images.posters[randomPosterIndex].file_path)
       : null,
     poster_count: posterMessage,
     video: randomVideoIndex !== null
-      ? (response.videos.results ? `https://i.ytimg.com/vi/${response.videos.results[randomVideoIndex].key}/hqdefault.jpg` : `https://i.ytimg.com/vi/${response.videos[randomVideoIndex].key}/hqdefault.jpg`) : null,
+      ? `https://i.ytimg.com/vi/${videosArray[randomVideoIndex].key}/hqdefault.jpg`
+      : null,
     video_count: videoMessage,
     official_trailer: trailer
   };
@@ -128,13 +270,16 @@ const MovieDetails = () => {
   );
 
   const director = response.credits.crew.find((member) => member.job === "Director");
-  const writers = response.credits.crew.filter((member) => member.department === "Writing").slice(0, 3).map((writer) => writer.name);
+  const writers = response.credits.crew
+    .filter((member) => member.department === "Writing")
+    .slice(0, 3)
+    .map((writer) => writer.name);
   const stars = response.credits.cast.slice(0, 3).map((star) => star.name);
 
   const hours = response.runtime ? Math.floor(response.runtime / 60) : 0;
   const minutes = response.runtime ? response.runtime % 60 : 0;
 
-  const overviewData = {
+  const overviewData: OverviewData = {
     type: 'movie',
     title: response.title,
     certifications:
@@ -143,22 +288,24 @@ const MovieDetails = () => {
       undefined,
     release_date: new Date(response.release_date).toLocaleDateString('en-PH'),
     genres: response.genres.map((genre) => genre.name).slice(0, 3),
-    vote_average: response.vote_average.toFixed(1) || 0,
+    vote_average: response.vote_average.toFixed(1) || '0',
     vote_count: ((response.vote_count / 1000).toFixed(1) + 'k'),
     tagline: response.tagline,
     overview: response.overview,
     original_language: response.original_language,
     original_title: response.original_title,
-    director: director ? director.name : undefined,
+    director: director?.name,
     writers: writers.length > 0 ? writers : undefined,
     stars,
     status: response.status,
-    runtime: response.runtime ? `${hours} hour${hours !== 1 ? 's' : ''} and ${minutes} minute${minutes !== 1 ? 's' : ''}` : 'N/A',
-    facebook_id: response.external_ids.facebook_id || undefined,
-    twitter_id: response.external_ids.twitter_id || undefined,
-    instagram_id: response.external_ids.instagram_id || undefined,
-    wikidata: response.external_ids.wikidata_id || undefined,
-    imdb_id: response.external_ids.imdb_id || undefined,
+    runtime: response.runtime
+      ? `${hours} hour${hours !== 1 ? 's' : ''} and ${minutes} minute${minutes !== 1 ? 's' : ''}`
+      : 'N/A',
+    facebook_id: response.external_ids.facebook_id,
+    twitter_id: response.external_ids.twitter_id,
+    instagram_id: response.external_ids.instagram_id,
+    wikidata: response.external_ids.wikidata_id,
+    imdb_id: response.external_ids.imdb_id,
     homepage: response.homepage,
     budget: new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -171,33 +318,33 @@ const MovieDetails = () => {
   };
 
   // Credits
-  const credits = {
+  const credits: Credits = {
     type: 'movie',
-    casts: response.credits.cast || undefined,
-    director: director || undefined,
-    writers: writers || undefined
+    casts: response.credits.cast,
+    director,
+    writers: writers.length > 0 ? writers : undefined
   };
 
   // Media
-  const medias = {
-    videos: response.videos.results || response.videos || undefined,
-    posters: response.posters || response.images.posters || undefined,
-    backdrops: response.backdrops || response.images.backdrops || undefined,
-    logos: response.logos || response.images.logos || undefined
+  const medias: Medias = {
+    videos: videosArray,
+    posters: response.posters || response.images.posters,
+    backdrops: response.backdrops || response.images.backdrops,
+    logos: response.logos || response.images.logos
   };
 
   // Recommendations
-  const recommendations = {
+  const recommendations: Recommendations = {
     recommendations: response.recommendations,
   };
 
   return (
     <>
-       <main className='text-white flex flex-col gap-0 font-roboto p-0'>
+      <main className='text-white flex flex-col gap-0 font-roboto p-0'>
         <section
           className='w-full h-[52.9375rem] bg-cover bg-center relative flex justify-center'
           style={{
-            backgroundImage: response._id
+            backgroundImage: response.id
               ? `url(${LOCALHOST}/images/${response.backdrop_path})`
               : `url(https://image.tmdb.org/t/p/original${response.backdrop_path})`
           }}

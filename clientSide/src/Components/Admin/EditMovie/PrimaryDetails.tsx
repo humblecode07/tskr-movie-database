@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { countryListApi, editPrimaryDetails, originalLanguageList } from '../../../api/api';
 import OriginalMovieLanguage from './PrimaryDetails/OriginalMovieLanguage';
 import OriginCountry from './PrimaryDetails/OriginCountry';
@@ -19,7 +19,7 @@ const PrimaryDetails = ({ movieData } : any) => {
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [inputValue, setInputValue] = useState('');
-  const [primaryDetails, setPrimaryDetails] = useState(() => ({
+  const [primaryDetails, setPrimaryDetails] : any = useState(() => ({
     original_language: movieData?.original_language || '',
     origin_country: movieData?.origin_country || [],
     original_title: movieData?.original_title || '',
@@ -41,10 +41,6 @@ const PrimaryDetails = ({ movieData } : any) => {
         status: movieData.status || '',
         adult: movieData.adult || false,
         video: movieData.video || false,
-        runtime: movieData.runtime || '',
-        revenue: movieData.revenue || '',
-        budget: movieData.budget || '',
-        homepage: movieData.homepage || ''
       });
     }
   }, [movieData]);
