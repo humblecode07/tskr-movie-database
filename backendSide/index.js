@@ -22,16 +22,20 @@ connectDB(); // Connect to the database
 
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(cors({
-   origin: 'http://localhost:5173', // Allow your frontend URL
-   credentials: true, // Enable cookies to be sent
+   origin: [
+      'http://localhost:5173',
+      'https://tskr-movie-database.vercel.app'
+   ],
+   credentials: true,
 }));
+
 app.use(cookieParser());
 
 app.use('/auth', authRouter);
 app.use('/movie', movieRouter);
-app.use('/users', usersRouter); 
-app.use('/search', searchRouter); 
-app.use('/refresh', refreshTokenRouter); 
+app.use('/users', usersRouter);
+app.use('/search', searchRouter);
+app.use('/refresh', refreshTokenRouter);
 app.use('/logout', logoutRouter);
 app.use('/images', imageRouter);
 

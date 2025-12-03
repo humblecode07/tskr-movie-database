@@ -34,7 +34,7 @@ const fetchResults = async (value : any, setResults : any) => {
 		];
 		const limitedResults = combinedResults.slice(0, 6);
 
-		// console.log(limitedResults)
+		console.log(limitedResults)
 		setResults(limitedResults)
 	} catch (error) {
 		console.error('Error fetching data:', error);
