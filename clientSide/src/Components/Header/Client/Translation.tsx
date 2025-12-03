@@ -1,4 +1,3 @@
-import React from 'react'
 import ArrowIcon from '../../../assets/Icons/ArrowIcon'
 
 const Translation = () => {
