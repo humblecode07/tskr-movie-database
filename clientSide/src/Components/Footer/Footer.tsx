@@ -42,7 +42,7 @@ const Footer = () => {
         <div className="contact-info">
           <div className="contact-item">
             <span className="footer-title">Get in touch</span>
-            <span className="footer-item">calderon.miko.00149@dyci.edu.ph</span>
+            <span className="footer-item">calderonmiko011@gmail.com</span>
           </div>
           <div className="contact-item">
             <span className="footer-title">Follow me on social media</span>

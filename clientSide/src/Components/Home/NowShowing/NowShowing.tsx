@@ -8,14 +8,12 @@ const NOW_SHOWING_MOVIES_API = 'https://api.themoviedb.org/3/movie/now_playing?l
 const NowShowing = () => {
   const [showingMovies, setShowingMovies] = useState([]);
 
+  console.log(showingMovies);
+
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await axios.get(NOW_SHOWING_MOVIES_API, {
-          params: {
-            language: 'en-US',
-            page: 1
-          },
+        const response =  await axios.get(NOW_SHOWING_MOVIES_API, {
           headers: {
             'Authorization': `Bearer ${import.meta.env.VITE_TMDB_API_READ_ACCESS_KEY}`,
             'Content-Type': 'application/json'

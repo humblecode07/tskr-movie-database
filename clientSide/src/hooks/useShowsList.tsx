@@ -141,7 +141,13 @@ export const useShowsList = (type: any) => {
 
     const fetchData = async () => {
       try {
-        const data = await apiFetch(`/discover/${type}?${queryParams}`);
+       const params = new URLSearchParams(
+        queryParams as Record<string, string>
+       );
+
+      const data = await apiFetch(
+        `/discover/${type}?${params.toString()}`
+      );
 
         setItems(prevItems => {
           if (currentPage === 1) return data.results;
@@ -170,6 +176,8 @@ export const useShowsList = (type: any) => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [filters, selectedSortBy, currentPage, type]);
+
+  
 
   return { items, filters, handleFilterChange, selectedSortBy, setSelectedSortBy, setCurrentPage, selectedView, setSelectedView };
 };

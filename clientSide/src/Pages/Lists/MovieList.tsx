@@ -24,6 +24,8 @@ const MovieList: React.FC = () => {
     document.title = 'tskr! Movie Database Website';
   }, [])
 
+  console.log(movies);
+
   return (
     <>
       <main className='text-white flex flex-col font-roboto'>
